@@ -42,47 +42,140 @@
       this.load.image('boss', 'assets/forgivencuteness.png');
       this.load.image('moveTarget', 'assets/moveTarget.png');
 
-      this.load.image('pawnhair1', 'assets/pawnhair1.png');
-      this.load.image('pawnhair2', 'assets/pawnhair2.png');
-      this.load.image('pawnhair3', 'assets/pawnhair3.png');
+      this.load.spritesheet('pawnhair1', 'assets/pawnhair1.png', { frameWidth: 48, frameHeight: 36 });
+      this.load.spritesheet('pawnhair2', 'assets/pawnhair2.png', { frameWidth: 48, frameHeight: 36 });
+      this.load.spritesheet('pawnhair3', 'assets/pawnhair3.png', { frameWidth: 48, frameHeight: 36 });
 
-      this.load.image('pawnhead1', 'assets/pawnhead1.png')
+      this.load.spritesheet('pawnhead1', 'assets/pawnhead1.png', { frameWidth: 48, frameHeight: 28 });
 
-      this.load.image('pawnbody1', 'assets/pawnbody1.png');
-      this.load.image('pawnbody2', 'assets/pawnbody2.png');
+      this.load.spritesheet('pawnbody1', 'assets/pawnbody1.png', { frameWidth: 48, frameHeight: 36 });
+      this.load.spritesheet('pawnbody2', 'assets/pawnbody2.png', { frameWidth: 48, frameHeight: 36 });
 
-      this.load.image('pawnbottom1', 'assets/pawnbottom1.png');
-      this.load.image('pawnbottom2', 'assets/pawnbottom2.png');
-      this.load.image('pawnbottom3', 'assets/pawnlegs1.png');
+      this.load.spritesheet('pawnbottom1', 'assets/pawnbottom1.png', { frameWidth: 48, frameHeight: 36 });
+      this.load.spritesheet('pawnbottom2', 'assets/pawnbottom2.png', { frameWidth: 48, frameHeight: 36 });
+      this.load.spritesheet('pawnbottom3', 'assets/pawnlegs1.png', { frameWidth: 48, frameHeight: 36 });
     },
 
     create: function () {
       player = this.physics.add.image(960, 720, 'player');
       playerTarget = this.physics.add.image(960, 720, 'playerTarget');
 
+      const defineAnims = () => {
+        const rate = 1;
+        const repeat = 1;
+        this.anims.create({
+          key: 'hair1down',
+          frames: this.anims.generateFrameNumbers('pawnhair1', { start: 0, end: 0 }),
+          frameRate: rate,
+          repeat: repeat
+        });
+        this.anims.create({
+          key: 'hair2down',
+          frames: this.anims.generateFrameNumbers('pawnhair2', { start: 0, end: 0 }),
+          frameRate: rate,
+          repeat: repeat
+        });
+        this.anims.create({
+          key: 'hair3down',
+          frames: this.anims.generateFrameNumbers('pawnhair3', { start: 0, end: 0 }),
+          frameRate: rate,
+          repeat: repeat
+        });
+
+        this.anims.create({
+          key: 'head1down',
+          frames: this.anims.generateFrameNumbers('pawnhead1', { start: 0, end: 0 }),
+          frameRate: rate,
+          repeat: repeat
+        });
+
+        this.anims.create({
+          key: 'body1down',
+          frames: this.anims.generateFrameNumbers('pawnbody1', { start: 0, end: 0 }),
+          frameRate: rate,
+          repeat: repeat
+        });
+        this.anims.create({
+          key: 'body2down',
+          frames: this.anims.generateFrameNumbers('pawnbody2', { start: 0, end: 0 }),
+          frameRate: rate,
+          repeat: repeat
+        });
+
+        this.anims.create({
+          key: 'bottom1down',
+          frames: this.anims.generateFrameNumbers('pawnbottom1', { start: 0, end: 0 }),
+          frameRate: rate,
+          repeat: repeat
+        });
+        this.anims.create({
+          key: 'bottom2down',
+          frames: this.anims.generateFrameNumbers('pawnbottom2', { start: 0, end: 0 }),
+          frameRate: rate,
+          repeat: repeat
+        });
+        this.anims.create({
+          key: 'bottom3down',
+          frames: this.anims.generateFrameNumbers('pawnlegs1', { start: 0, end: 0 }),
+          frameRate: rate,
+          repeat: repeat
+        });
+      }
+
       const composePawn = (container) => {
+        const getRandomIndex = (array) => {
+          return Math.floor(Math.random() * array.length);
+        }
         // get legs
-        const legKey = 'pawnlegs1';
-        var legSprite = this.add.sprite(0, 0, legKey);
+        const legKeys = ['pawnbottom1', 'pawnbottom2', 'pawnbottom3'];
+        const legDownAnims = ['bottom1down', 'bottom2down', 'bottom3down'];
+        const legIndex = getRandomIndex(legKeys);
+        const legKey = legKeys[legIndex];
+        var legSprite = this.add.sprite(0, 54, legKey);
+        legSprite._downAnimKey = legDownAnims[legIndex];
         container.add(legSprite)
 
         // get torso
-        const torsoKey = 'pawntorso1';
-        torsoSprite = this.add.sprite(0, 0, torsoKey);
+        const torsoKeys = ['pawnbody1', 'pawnbody2'];
+        const torsoDownAnims = ['body1down', 'body2down'];
+        const torsoIndex = getRandomIndex(torsoKeys);
+        const torsoKey = torsoKeys[torsoIndex];
+        torsoSprite = this.add.sprite(0, 18, torsoKey);
+        torsoSprite._downAnimKey = torsoDownAnims[torsoIndex];
         container.add(torsoSprite)
 
         // get head
         const headKey = 'pawnhead1';
-        headSprite = this.add.sprite(0, 0, headKey);
+        headSprite = this.add.sprite(0, -12, headKey);
+        headSprite._downAnimKey = 'head1down';
         container.add(headSprite)
 
         // get hair
-        const hairKey = 'pawnhair1';
+        const hairKeys = ['pawnhair1', 'pawnhair2', 'pawnhair3'];
+        const hairDownAnims = ['hair1down', 'hair2down', 'hair3down'];
+        const hairIndex = getRandomIndex(hairKeys);
+        const hairKey = hairKeys[hairIndex];
         var hairSprite = this.add.sprite(0, 0, hairKey);
+        hairSprite._downAnimKey = hairDownAnims[hairIndex];
         container.add(hairSprite)
       }
 
-      pawns = this.physics.add.group({ key: 'pawn', frameQuantity: 7 });
+      pawns = this.physics.add.group();
+
+      var i
+      for (i=0; i<8; i++) {
+        const pawn = this.add.container();
+        this.physics.world.enable(pawn);
+        composePawn(pawn);
+        pawns.add(pawn);
+      }
+      this.anims.create({
+        key: 'down',
+        frames: this.anims.generateFrameNumbers('dude', { start: 0, end: 0 }),
+        frameRate: 0,
+        repeat: 0
+      });
+
       Phaser.Actions.RandomCircle(pawns.getChildren(), startZone);
       pawns.getChildren().forEach(pawn => {
         pawn.targetLocation = new Phaser.Geom.Point(pawn.x, pawn.y);
@@ -124,6 +217,10 @@
       }
 
       const movePawn = (pawn) => {
+        if (true) { // direction checker later
+          // const components = pawn.getAll('_downAnimKey');
+          // components.forEach(component => component.anims.play(component._downAnimKey))
+        }
         if (gameTime > pawn.nextPawnMoveTime) {
           pawn.nextPawnMoveTime = gameTime + pawn.pawnMoveInterval;
           if (mechanicActive) {
