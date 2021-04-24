@@ -6,53 +6,102 @@
 <body>
 
     <script>
+
+    var player;
+    var target = new Phaser.Math.Vector2();;
+
+    const RaidScene = new Phaser.Class({
+
+      Extends: Phaser.Scene,
+
+      initialize: function RaidScene ()
+      {
+        Phaser.Scene.call(this, { key: 'RaidScene' });
+      },
+
+      preload: function () {
+        this.load.image('player', 'assets/player.png');
+      },
+
+      create: function () {
+        player = this.physics.add.image(960, 540, 'player');
+
+        this.input.on('pointerdown', function (pointer)
+          {
+            target.x = pointer.x;
+            target.y = pointer.y;
+            this.physics.moveToObject(player, pointer, 240);
+          }, this
+        );
+      },
+
+      update: function() {
+        //this.physics.arcade.moveToPointer(player, 400);
+        // var cursorX = this.scene.input.x;
+        // var cursorY = this.scene.input.y;
+        // this.scene.physics.moveTo(player, 100, 100, 100, null);
+
+        var distance = Phaser.Math.Distance.Between(player.x, player.y, target.x, target.y);
+
+        if (player.body.speed > 0)
+        {
+          //distanceText.setText('Distance: ' + distance);
+
+          //  4 is our distance tolerance, i.e. how close the source can get to the target
+          //  before it is considered as being there. The faster it moves, the more tolerance is required.
+          if (distance < 4)
+          {
+              player.body.reset(target.x, target.y);
+          }
+        }
+      }
+    });
+
     var config = {
         type: Phaser.AUTO,
-        width: 800,
-        height: 600,
+        width: 1920,
+        height: 1080,
         physics: {
             default: 'arcade',
             arcade: {
-                gravity: { y: 200 }
+                gravity: { y: 0 },
+                debug: true
             }
         },
-        scene: {
-            preload: preload,
-            create: create
-        }
+        scene: [RaidScene]
     };
 
     var game = new Phaser.Game(config);
 
-    function preload ()
-    {
-        //this.load.setBaseURL('http://labs.phaser.io');
-
-        this.load.image('sky', 'assets/skies/space3.png');
-        this.load.image('logo', 'assets/sprites/phaser3-logo.png');
-        this.load.image('red', 'assets/particles/red.png');
-    }
-
-    function create ()
-    {
-        this.add.image(400, 300, 'sky');
-
-        var particles = this.add.particles('red');
-
-        var emitter = particles.createEmitter({
-            speed: 100,
-            scale: { start: 1, end: 0 },
-            blendMode: 'ADD'
-        });
-
-        var logo = this.physics.add.image(400, 100, 'logo');
-
-        logo.setVelocity(100, 200);
-        logo.setBounce(1, 1);
-        logo.setCollideWorldBounds(true);
-
-        emitter.startFollow(logo);
-    }
+    // function preload ()
+    // {
+    //     //this.load.setBaseURL('http://labs.phaser.io');
+    //
+    //     this.load.image('sky', 'assets/skies/space3.png');
+    //     this.load.image('logo', 'assets/sprites/phaser3-logo.png');
+    //     this.load.image('red', 'assets/particles/red.png');
+    // }
+    //
+    // function create ()
+    // {
+    //     this.add.image(400, 300, 'sky');
+    //
+    //     var particles = this.add.particles('red');
+    //
+    //     var emitter = particles.createEmitter({
+    //         speed: 100,
+    //         scale: { start: 1, end: 0 },
+    //         blendMode: 'ADD'
+    //     });
+    //
+    //     var logo = this.physics.add.image(400, 100, 'logo');
+    //
+    //     logo.setVelocity(100, 200);
+    //     logo.setBounce(1, 1);
+    //     logo.setCollideWorldBounds(true);
+    //
+    //     emitter.startFollow(logo);
+    // }
     </script>
 
 </body>
