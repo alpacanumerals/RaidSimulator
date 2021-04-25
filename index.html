@@ -10,10 +10,10 @@
   <script>
   // constants for gameplay to refer to. some of these may stop being constants for e.g. boss variance
 
-  const leftPlayBound = 480;
-  const rightPlayBound = 1440;
-  const topPlayBound = 0;
-  const bottomPlayBound = 1080;
+  const leftPlayBound = 690;
+  const rightPlayBound = 1800;
+  const topPlayBound = 120;
+  const bottomPlayBound = 1020;
 
   const raidZone = new Phaser.Geom.Rectangle(leftPlayBound, topPlayBound, rightPlayBound, bottomPlayBound);
   const startZone = new Phaser.Geom.Circle(960, 720, 100);
@@ -454,8 +454,8 @@
 
       if (gameTime > nextBossMoveTime) {
         nextBossMoveTime = globalClock + bossMoveInterval;
-        bossTarget.x = Phaser.Math.RND.between(480, 1440);
-        bossTarget.y = Phaser.Math.RND.between(0, 1080);
+        bossTarget.x = Phaser.Math.RND.between(690, 1800);
+        bossTarget.y = Phaser.Math.RND.between(60, 960);
         this.physics.moveToObject(boss, bossTarget, 240);
       }
 
