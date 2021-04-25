@@ -23,6 +23,7 @@
   const bossMechanicInterval = 10000;
   const bossMaxHp = 200000;
   const pawnDamage = 200;
+  const pawnMaxHp = 1000;
 
   //sorry for the big definition here!
   circleAoeRadius = 500;
@@ -387,6 +388,7 @@
         pawn.pawnMoveInterval = Phaser.Math.RND.between(100, 400)
         pawn.nextPawnMoveTime = globalClock + pawn.pawnMoveInterval;
         pawn.respondingToMechanic = false;
+        pawn.currentHealth = pawnMaxHp;
       }, this);
       // pawn creation end
 
@@ -418,12 +420,17 @@
         this.scene.start('IntroScene');
       }
 
-      if (mechanicActive && globalClock > mechanicFireTime) {
-        // play anim
-        // check for damage
-        // turn off mechanic response
-        pawns.getChildren().forEach(pawn => {pawn.respondingToMechanic = false}, this);
+      if (mechanicActive && globalClock > mechanicFireTime) {¥
         currentMechanic.damageAnimation(this, boss);
+        // check for damage
+        pawns.getChildren().forEach(pawn => {
+          if (currentMechanic.checkDamageZone(pawn, boss)) {
+            pawn.currentHealth -= currentMechanic.damage;
+          }
+        }, this);
+
+        pawns.getChildren().forEach(pawn => {pawn.respondingToMechanic = false}, this);
+
         nextMechanicTime = globalClock + bossMechanicInterval;
         mechanicActive = false;
         mechanicText.setText('No Mechanic')
