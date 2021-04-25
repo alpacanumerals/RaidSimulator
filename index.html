@@ -199,6 +199,8 @@
       this.load.spritesheet('pawnbottom1', 'assets/pawnbottom1.png', { frameWidth: 48, frameHeight: 36 });
       this.load.spritesheet('pawnbottom2', 'assets/pawnbottom2.png', { frameWidth: 48, frameHeight: 36 });
       this.load.spritesheet('pawnbottom3', 'assets/pawnlegs1.png', { frameWidth: 48, frameHeight: 36 });
+
+      this.load.image("bossroom", "assets/bossroom1.png")
     },
 
     create: function (gameTime) {
@@ -237,6 +239,8 @@
       P22 = this.add.text(325, 275, "Player", pawnCardStyle);
       P23 = this.add.text(325, 315, "Player", pawnCardStyle);
       P24 = this.add.text(325, 355, "Player", pawnCardStyle);
+      //Let's also throw the arena on.
+      room = this.add.image(1245, 540, "bossroom")
 
       //MALCODE ENDS
 
