@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="UTF-8" />
 	<title>Raid' Simulator</title>
     <script src="https://cdn.jsdelivr.net/npm/phaser@3.54.0/dist/phaser-arcade-physics.min.js"></script>
 </head>
@@ -108,9 +109,11 @@
       this.load.image('start1', 'assets/button-start-1.png');
       this.load.image('start2', 'assets/button-start-2.png');
       this.load.audio('click', 'assets/se-type.wav');
+      //this.load.text("data", "assets/_Barks-v1.txt"); // Testing text loading from other files.
     },
 
     create: function () {
+      //console.log(this.cache.text.get("data")) // Testing text loading from other files.
       this.add.image(960, 540, "title");
       click = this.sound.add("click");
 
