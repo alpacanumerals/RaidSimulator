@@ -460,6 +460,36 @@
         }
       }
 
+      const flockPawn = (pawn) => {
+        var targetX = 0;
+        var targetY = 0;
+        var flockMaximum = 250;
+        const flockMinimum = 10;
+        var peerCount = 0;
+        var emergencyBreak = 0;
+        const surveyPeers = (maxRadius) => {
+          pawns.getChildren().forEach(other => {
+            const dist = Phaser.Math.Distance.Between(pawn.x, pawn.y, other.x, other.y);
+            if (dist < flockMaximum && dist > flockMinimum) {
+              peerCount++;
+              targetX += other.x;
+              targetY += other.y;
+            }
+          });
+        }
+        while (peerCount == 0 && emergencyBreak < 3) {
+          surveyPeers(flockMaximum);
+          flockMaximum = flockMaximum * 2;
+          emergencyBreak++;
+        }
+        if (peerCount == 0) {
+          peerCount = 1;
+        };
+        const target = new Phaser.Math.Vector2(targetX/peerCount, targetY/peerCount);
+        pawn.targetLocation = target;
+        this.physics.moveToObject(pawn, pawn.targetLocation, 240);
+      }
+
       const movePawn = (pawn) => {
         if (true) { // direction checker later
           // const components = pawn.getAll('_downAnimKey');
