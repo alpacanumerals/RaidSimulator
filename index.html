@@ -32,7 +32,7 @@
         chargeTime: 5000,
         damage: 600,
         damageAnimation: (_this, boss) => {
-          var damageCircle = _this.add.circle(boss.x, boss.y, circleAoeRadius+100, 0x6666ff);
+          var damageCircle = _this.add.circle(boss.x, boss.y, circleAoeRadius+300, 0x6666ff);
           _this.tweens.add({
             targets: damageCircle,
             alpha: 0,
@@ -43,7 +43,7 @@
         },
         damageRadius: 500,
         checkDamageZone: (pawn, boss) => {
-          return Phaser.Math.Distance.Between(pawn.x, pawn.y, boss.x, boss.y) < circleAoeRadius+100;
+          return Phaser.Math.Distance.Between(pawn.x, pawn.y, boss.x, boss.y) < circleAoeRadius+300;
         },
         getSafeLocation: (pawn, boss) => {
           // pretend circle is rectangle for tractability
@@ -543,8 +543,8 @@
           pawn.currentHealth = 0;
           pawn.keio = true;
           // pawn stops moving
-          pawn.reset(pawn.x, pawn.y);
           pawn.angle = 90;
+          // pawn.body.reset(pawn.x, pawn.y);
         }
       }
 
