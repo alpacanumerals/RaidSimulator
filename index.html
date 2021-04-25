@@ -43,6 +43,8 @@
   var mechanics;
 
   var globalClock;
+  var startRaid;
+  var startRaidTime;
 
   // the first scene players see
   const IntroScene = new Phaser.Class({
@@ -66,7 +68,7 @@
 	  const goDeeperButton = this.add.image(960, 540, 'goDeeper1');
       goDeeperButton.setInteractive();
       goDeeperButton.on('pointerup', function () {
-		click.play();
+	    click.play();
         this.scene.start('RaidScene');
       }, this);
     },
