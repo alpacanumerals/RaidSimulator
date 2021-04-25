@@ -30,9 +30,9 @@
   const circleAoe = {
         name: 'initialise this from the list somehow',
         chargeTime: 5000,
-        damage: 100,
+        damage: 600,
         damageAnimation: (_this, boss) => {
-          var damageCircle = _this.add.circle(boss.x, boss.y, circleAoeRadius, 0x6666ff);
+          var damageCircle = _this.add.circle(boss.x, boss.y, circleAoeRadius+100, 0x6666ff);
           _this.tweens.add({
             targets: damageCircle,
             alpha: 0,
@@ -43,7 +43,7 @@
         },
         damageRadius: 500,
         checkDamageZone: (pawn, boss) => {
-          return Phaser.Math.Distance.Between(pawn.x, pawn.y, boss.x, boss.y) < circleAoeRadius;
+          return Phaser.Math.Distance.Between(pawn.x, pawn.y, boss.x, boss.y) < circleAoeRadius+100;
         },
         getSafeLocation: (pawn, boss) => {
           // pretend circle is rectangle for tractability
@@ -389,6 +389,7 @@
         pawn.nextPawnMoveTime = globalClock + pawn.pawnMoveInterval;
         pawn.respondingToMechanic = false;
         pawn.currentHealth = pawnMaxHp;
+        pawn.keio = false;
         pawn.knowsMechanic = Math.random() < 0.25 ? true : false;
       }, this);
       // pawn creation end
@@ -469,7 +470,7 @@
 
       // pawns call this to handle their attack
       const pawnAttack = (pawn) => {
-        if (gameTime > pawn.nextPawnAttackTime) {
+        if (!pawn.keio && gameTime > pawn.nextPawnAttackTime) {
           if (bossDamageCircle.contains(pawn.x, pawn.y)) {
             pawn.nextPawnAttackTime = gameTime + pawn.pawnAttackInterval
             // sfx
@@ -514,7 +515,7 @@
           // const components = pawn.getAll('_downAnimKey');
           // components.forEach(component => component.anims.play(component._downAnimKey))
         }
-        if (gameTime > pawn.nextPawnMoveTime) {
+        if (!pawn.keio && gameTime > pawn.nextPawnMoveTime) {
           pawn.nextPawnMoveTime = globalClock + pawn.pawnMoveInterval;
           if (mechanicActive) {
             if (pawn.knowsMechanic) { // knows mechanic check
@@ -538,7 +539,13 @@
       }
 
       const checkDeath = (pawn) => {
-
+        if (pawn.currentHealth <= 0) {
+          pawn.currentHealth = 0;
+          pawn.keio = true;
+          // pawn stops moving
+          pawn.reset(pawn.x, pawn.y);
+          pawn.angle = 90;
+        }
       }
 
       pawns.getChildren().forEach(pawn => {
