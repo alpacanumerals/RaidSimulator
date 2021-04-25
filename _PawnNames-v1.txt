@@ -1,0 +1,117 @@
+//Enough here to start off.
+//Preformed 2-Barrel Memey Names
+[
+"Jenova's Witness"
+"Viewing Cutscene"
+"Floor Tank"
+"Additional Pylons"
+"Wind-up Alpacalypse"
+"Wind-up Ruruie"
+"Statistical Mechanics"
+"Wistful Alpaca"
+"Brave Cod"
+"Ron Tsumo"
+"Getty Images"
+"Partly True"
+]
+
+//Meme-y Forenames
+[
+"Bankruptcy"
+"Legal"
+"Statistical"
+]
+
+//Meme-y Aftnames
+[
+"Mechanics"
+"Protection"
+"Qualification"
+"Representation"
+]
+
+//Meme-y Names - Any Position
+[
+"Birb"
+"Cat"
+"Catboy"
+"Catgirl"
+"Doggo"
+]
+
+
+
+
+
+//Normalish Forenames 
+[
+"Alexis"
+"Bon"
+"Conno"
+"Dia"
+"Eirin"
+"Four"
+"Gorda"
+"Harlock"
+"Ira"
+"Jamie"
+"Kelly"
+"Leigh"
+"Madis"
+"Norn"
+"Or"
+"Pat"
+"Qitana"
+"Robin"
+"Shirley"
+"Tracy"
+"Ura"
+"Vivian"
+"Wyn"
+"Xavi"
+"Ys"
+"Zo"
+]
+
+//Normalish Aftnames
+
+[
+"Altos"
+"Bella"
+"Corvus"
+"Dara"
+"Einz"
+"Faf"
+"Gallon"
+"Hep"
+"Irin"
+"Jorgen"
+"Kalla"
+"Lala"
+"Meme"
+"North"
+"Opho"
+"Pale"
+"Quincy"
+"Ral"
+"Stan"
+"Tana"
+"Ura"
+"Van"
+"Wall"
+"Xavier"
+"Yan"
+"Zyra"
+]
+
+//Aft Aftnames - Append to the end for more variety!
+[
+"bern"
+"erk"
+"is"
+"leigh"
+"ly"
+"son"
+"sen"
+"ters"
+]
