@@ -327,13 +327,13 @@
         const torsoDownAnims = ['body1down', 'body2down'];
         const torsoIndex = getRandomIndex(torsoKeys);
         const torsoKey = torsoKeys[torsoIndex];
-        torsoSprite = this.add.sprite(0, 18, torsoKey);
+        torsoSprite = this.add.sprite(0, 20, torsoKey);
         torsoSprite._downAnimKey = torsoDownAnims[torsoIndex];
         container.add(torsoSprite)
 
         // get head
         const headKey = 'pawnhead1';
-        headSprite = this.add.sprite(0, -12, headKey);
+        headSprite = this.add.sprite(0, -4, headKey);
         headSprite._downAnimKey = 'head1down';
         container.add(headSprite)
 
