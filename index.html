@@ -103,6 +103,8 @@
 
     preload: function () {
       this.load.image('title', 'assets/title.png');
+      this.load.image('fullscreen1', 'assets/button-fullscreen-1.png');
+      this.load.image('fullscreen2', 'assets/button-fullscreen-2.png');
       this.load.image('goDeeper1', 'assets/button-godeeper-1.png');
       this.load.image('goDeeper2', 'assets/button-godeeper-2.png');
       this.load.audio('click', 'assets/se-type.wav');
@@ -111,13 +113,25 @@
     create: function () {
       this.add.image(960, 540, "title");
       click = this.sound.add("click");
-      const goDeeperButton = this.add.image(960, 540, 'goDeeper1');
+
+      const fullscreenButton = this.add.image(400, 600, "fullscreen1");
+        fullscreenButton.setInteractive();
+        fullscreenButton.on('pointerup', function () {
+          console.log ("mal-logging")
+          click.play();
+          if (this.scale.isFullscreen) {
+            this.scale.stopFullscreen();
+          }    
+          else {
+            this.scale.startFullscreen();
+          }
+      }, {}, this);  
+      
+      const goDeeperButton = this.add.image(400, 700, 'goDeeper1');
         goDeeperButton.setInteractive();
         goDeeperButton.on('pointerup', function () {
-          console.log ("abel")
           click.play();
-          this.time.delayedCall(400, function () {
-            console.log ("bob")
+          this.time.delayedCall(500, function () {
             this.scene.start('RaidScene');
           }, {}, this);
         }, this);
