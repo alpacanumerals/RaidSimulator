@@ -117,13 +117,13 @@
         fullscreenButton.on('pointerup', function () {
           console.log ("mal-logging")
           click.play();
-         // if (this.scale.isFullscreen) {
-         //   this.scale.stopFullscreen();
-         // }    
-         // else {
-         //   this.scale.startFullscreen();
-         // }
-      //}, {}, this);  
+          if (this.scale.isFullscreen) {
+            this.scale.stopFullscreen();
+          }    
+          else {
+            this.scale.startFullscreen();
+          }
+      }, {}, this);  
       
       const goDeeperButton = this.add.image(400, 700, 'goDeeper1');
         goDeeperButton.setInteractive();
