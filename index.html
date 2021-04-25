@@ -12,11 +12,11 @@
 
   const leftPlayBound = 690;
   const rightPlayBound = 1800;
-  const topPlayBound = 120;
-  const bottomPlayBound = 1020;
+  const topPlayBound = 60;
+  const bottomPlayBound = 960;
 
   const raidZone = new Phaser.Geom.Rectangle(leftPlayBound, topPlayBound, rightPlayBound, bottomPlayBound);
-  const startZone = new Phaser.Geom.Circle(960, 720, 100);
+  const startZone = new Phaser.Geom.Circle(1245, 720, 100);
 
   const damageRange = 100;
   const bossMoveInterval = 5000;
@@ -318,7 +318,7 @@
         const legDownAnims = ['bottom1down', 'bottom2down', 'bottom3down'];
         const legIndex = getRandomIndex(legKeys);
         const legKey = legKeys[legIndex];
-        var legSprite = this.add.sprite(0, 54, legKey);
+        var legSprite = this.add.sprite(0, -18, legKey);
         legSprite._downAnimKey = legDownAnims[legIndex];
         container.add(legSprite)
 
@@ -327,13 +327,13 @@
         const torsoDownAnims = ['body1down', 'body2down'];
         const torsoIndex = getRandomIndex(torsoKeys);
         const torsoKey = torsoKeys[torsoIndex];
-        torsoSprite = this.add.sprite(0, 20, torsoKey);
+        torsoSprite = this.add.sprite(0, -52, torsoKey);
         torsoSprite._downAnimKey = torsoDownAnims[torsoIndex];
         container.add(torsoSprite)
 
         // get head
         const headKey = 'pawnhead1';
-        headSprite = this.add.sprite(0, -4, headKey);
+        headSprite = this.add.sprite(0, -76, headKey);
         headSprite._downAnimKey = 'head1down';
         container.add(headSprite)
 
@@ -342,7 +342,7 @@
         const hairDownAnims = ['hair1down', 'hair2down', 'hair3down'];
         const hairIndex = getRandomIndex(hairKeys);
         const hairKey = hairKeys[hairIndex];
-        var hairSprite = this.add.sprite(0, 0, hairKey);
+        var hairSprite = this.add.sprite(0, -72, hairKey);
         hairSprite._downAnimKey = hairDownAnims[hairIndex];
         container.add(hairSprite)
       }
@@ -454,8 +454,8 @@
 
       if (gameTime > nextBossMoveTime) {
         nextBossMoveTime = globalClock + bossMoveInterval;
-        bossTarget.x = Phaser.Math.RND.between(690, 1800);
-        bossTarget.y = Phaser.Math.RND.between(60, 960);
+        bossTarget.x = Phaser.Math.RND.between(790, 1700);
+        bossTarget.y = Phaser.Math.RND.between(160, 860);
         this.physics.moveToObject(boss, bossTarget, 240);
       }
 
