@@ -21,20 +21,29 @@
   const damageRange = 100;
   const bossMoveInterval = 5000;
   const bossMechanicInterval = 10000;
-  const bossMaxHp = 1000000;
+  const bossMaxHp = 200000;
   const pawnDamage = 200;
 
   //sorry for the big definition here!
   circleAoeRadius = 500;
   const circleAoe = {
         name: 'initialise this from the list somehow',
-        chargeTime: 10000,
+        chargeTime: 5000,
         damage: 100,
-        damageAnimation: null,
+        damageAnimation: (_this, boss) => {
+          var damageCircle = _this.add.circle(boss.x, boss.y, circleAoeRadius, 0x6666ff);
+          _this.tweens.add({
+            targets: damageCircle,
+            alpha: 0,
+            yoyo: false,
+            repeat: 0,
+            ease: 'Sine.easeInOut'
+          })
+        },
         damageRadius: 500,
         checkDamageZone: (pawn, boss) => {
           return Phaser.Math.Distance.Between(pawn.x, pawn.y, boss.x, boss.y) < circleAoeRadius;
-        }, 
+        },
         getSafeLocation: (pawn, boss) => {
           // pretend circle is rectangle for tractability
           // pick random x in play area
@@ -374,6 +383,7 @@
         // check for damage
         // turn off mechanic response
         pawns.getChildren().forEach(pawn => {pawn.respondingToMechanic = false}, this);
+        currentMechanic.damageAnimation(this, boss);
         nextMechanicTime = globalClock + bossMechanicInterval;
         mechanicActive = false;
         mechanicText.setText('No Mechanic')
@@ -420,6 +430,7 @@
         var flockMaximum = 250;
         const flockMinimum = 10;
         var peerCount = 0;
+        var emergencyBreak = 0;
         const surveyPeers = (maxRadius) => {
           pawns.getChildren().forEach(other => {
             const dist = Phaser.Math.Distance.Between(pawn.x, pawn.y, other.x, other.y);
@@ -428,13 +439,16 @@
               targetX += other.x;
               targetY += other.y;
             }
-            if (dist)
           });
         }
-        while (peerCount == 0) {
+        while (peerCount == 0 && emergencyBreak < 3) {
           surveyPeers(flockMaximum);
           flockMaximum = flockMaximum * 2;
+          emergencyBreak++;
         }
+        if (peerCount == 0) {
+          peerCount = 1;
+        };
         const target = new Phaser.Math.Vector2(targetX/peerCount, targetY/peerCount);
         pawn.targetLocation = target;
         this.physics.moveToObject(pawn, pawn.targetLocation, 240);
