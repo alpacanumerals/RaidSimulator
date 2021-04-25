@@ -12,20 +12,52 @@
 
   const damageRange = 100;
   const bossMoveInterval = 5000;
+  const bossMaxHp = 100000;
+  const pawnDamage = 200;
 
   var player;
   var boss;
 
   var pawns;
 
+  var attackParticle;
+
   var playerTarget;
   var bossTarget = new Phaser.Math.Vector2();
 
   var timeText;
+  var bossHealthText;
 
   var nextBossMoveTime;
+  var bossHealth;
 
   var mechanicActive;
+
+  var mechanics;
+
+  const IntroScene = new Phaser.Class({
+    Extends: Phaser.Scene,
+
+    initialize: function RaidScene ()
+    {
+      Phaser.Scene.call(this, { key: 'IntroScene' });
+    },
+
+    preload: function () {
+      this.load.image('goDeeper1', 'assets/button-godeeper-1.png');
+      this.load.image('goDeeper2', 'assets/button-godeeper-2.png');
+    },
+
+    create: function () {
+      const goDeeperButton = this.add.image('960', '540', 'goDeeper1');
+      goDeeperButton.setInteractive();
+      goDeeperButton.on('pointerup', function () {
+        this.scene.start('RaidScene');
+      }, this);
+    },
+
+    update: function () {},
+  })
 
   const RaidScene = new Phaser.Class({
 
@@ -42,6 +74,9 @@
       this.load.image('boss', 'assets/forgivencuteness.png');
       this.load.image('moveTarget', 'assets/moveTarget.png');
 
+      this.load.image('spark', 'assets/prt.png');
+      this.load.image('bullet1', 'assets/bullet1.png');
+
       this.load.spritesheet('pawnhair1', 'assets/pawnhair1.png', { frameWidth: 48, frameHeight: 36 });
       this.load.spritesheet('pawnhair2', 'assets/pawnhair2.png', { frameWidth: 48, frameHeight: 36 });
       this.load.spritesheet('pawnhair3', 'assets/pawnhair3.png', { frameWidth: 48, frameHeight: 36 });
@@ -57,6 +92,17 @@
     },
 
     create: function () {
+      const circleAoe = {
+        name: 'initialise this from the list somehow',
+        chargeTime: 5000,
+        damage: 100,
+        damageAnimation: null,
+        checkDamageZone: (pawn) => {}, 
+        getSafeLocation: (pawn, boss) => {},
+      };
+
+      particles = this.add.particles('spark');
+
       player = this.physics.add.image(960, 720, 'player');
       playerTarget = this.physics.add.image(960, 720, 'playerTarget');
 
@@ -160,6 +206,22 @@
         container.add(hairSprite)
       }
 
+      const addPawnEmitter = (container) => {
+        var emitter = particles.createEmitter({
+          x: container.x,
+          y: container.y,
+          speed: 50,
+          quantity: 0.01,
+          scale: { start: 0.1, end: 0.2 },
+        });
+
+        emitter.setSpeed(50);
+        emitter.setBlendMode(Phaser.BlendModes.ADD);
+        // emitter.pause();
+
+        container.add(emitter);
+      }
+
       pawns = this.physics.add.group();
 
       var i
@@ -167,6 +229,7 @@
         const pawn = this.add.container();
         this.physics.world.enable(pawn);
         composePawn(pawn);
+        // addPawnEmitter(pawn);
         pawns.add(pawn);
       }
       this.anims.create({
@@ -179,6 +242,8 @@
       Phaser.Actions.RandomCircle(pawns.getChildren(), startZone);
       pawns.getChildren().forEach(pawn => {
         pawn.targetLocation = new Phaser.Geom.Point(pawn.x, pawn.y);
+        pawn.pawnAttackInterval = Phaser.Math.RND.between(250, 400)
+        pawn.nextPawnAttackTime = pawn.pawnAttackInterval
         pawn.pawnMoveInterval = Phaser.Math.RND.between(100, 400)
         pawn.nextPawnMoveTime = pawn.pawnMoveInterval;
       }, this);
@@ -193,13 +258,19 @@
       );
 
       timeText = this.add.text(10, 10, 'Time: ', { fill: '#00ff00' });
-      nextBossMoveTime = 5000;
+      bossHealthText = this.add.text(10, 30, 'Boss Hp: ', { fill: '#00ff00' });
+      nextBossMoveTime = bossMoveInterval;
+      bossHealth = bossMaxHp;
 
       mechanicActive = false;
     },
 
     update: function(gameTime, delta) {
       timeText.setText('Time: ' + gameTime);
+      bossHealthText.setText(bossHealth + '/' + bossMaxHp);
+      if (bossHealth <= 0) {
+        this.scene.start('IntroScene');
+      }
 
       const checkStop = (object, target) => {
         var distance = Phaser.Math.Distance.Between(object.x, object.y, target.x, target.y);
@@ -216,6 +287,18 @@
         this.physics.moveToObject(boss, bossTarget, 240);
       }
 
+      const bossDamageCircle = new Phaser.Geom.Circle(boss.x, boss.y, damageRange);
+
+      const pawnAttack = (pawn) => {
+        if (gameTime > pawn.nextPawnAttackTime) {
+          if (bossDamageCircle.contains(pawn.x, pawn.y)) {
+            pawn.nextPawnAttackTime = gameTime + pawn.pawnAttackInterval
+            // sfx
+            bossHealth = bossHealth - pawnDamage;
+          }
+        }
+      }
+
       const movePawn = (pawn) => {
         if (true) { // direction checker later
           // const components = pawn.getAll('_downAnimKey');
@@ -224,9 +307,12 @@
         if (gameTime > pawn.nextPawnMoveTime) {
           pawn.nextPawnMoveTime = gameTime + pawn.pawnMoveInterval;
           if (mechanicActive) {
-          console.log("Unreachable code, something has gone wrong");
+            console.log("Unreachable code, something has gone wrong");
+            // if already responding, keep going
+            // if NOT then
+            // -if know mechanic, go to safe zone
+            // -else flock (concern.jpg)
           } else {
-            const bossDamageCircle = new Phaser.Geom.Circle(boss.x, boss.y, damageRange);
             if (!bossDamageCircle.contains(pawn.x, pawn.y)) {
               pawn.targetLocation = Phaser.Geom.Circle.Random(bossDamageCircle);
               this.physics.moveToObject(pawn, pawn.targetLocation, 240);
@@ -237,6 +323,7 @@
       }
 
       pawns.getChildren().forEach(pawn => {
+        pawnAttack(pawn);
         movePawn(pawn);
       }, this);
 
@@ -256,7 +343,7 @@
               debug: true
           }
       },
-      scene: [RaidScene]
+      scene: [IntroScene, RaidScene]
   };
 
   var game = new Phaser.Game(config);
