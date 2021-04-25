@@ -84,8 +84,6 @@
   var mechanics;
 
   var globalClock;
-  var startRaid;
-  var startRaidTime;
 
   // the first scene players see
   const IntroScene = new Phaser.Class({
@@ -97,21 +95,25 @@
     },
 
     preload: function () {
-	  this.load.image('title', 'assets/title.png');
-    this.load.image('goDeeper1', 'assets/button-godeeper-1.png');
-    this.load.image('goDeeper2', 'assets/button-godeeper-2.png');
-	  this.load.audio('click', 'assets/se-type.wav');
+      this.load.image('title', 'assets/title.png');
+      this.load.image('goDeeper1', 'assets/button-godeeper-1.png');
+      this.load.image('goDeeper2', 'assets/button-godeeper-2.png');
+      this.load.audio('click', 'assets/se-type.wav');
     },
 
     create: function () {
       this.add.image(960, 540, "title");
-	  click = this.sound.add("click");
-	  const goDeeperButton = this.add.image(960, 540, 'goDeeper1');
-      goDeeperButton.setInteractive();
-      goDeeperButton.on('pointerup', function () {
-	    click.play();
-        this.scene.start('RaidScene');
-      }, this);
+      click = this.sound.add("click");
+      const goDeeperButton = this.add.image(960, 540, 'goDeeper1');
+        goDeeperButton.setInteractive();
+        goDeeperButton.on('pointerup', function () {
+          console.log ("abel")
+          click.play();
+          this.time.delayedCall(400, function () {
+            console.log ("bob")
+            this.scene.start('RaidScene');
+          }, {}, this);
+        }, this);
     },
 
     update: function (gameTime) {
