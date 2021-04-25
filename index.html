@@ -115,26 +115,26 @@
       click = this.sound.add("click");
 
       const fullscreenButton = this.add.image(400, 600, "fullscreen1");
-        fullscreenButton.setInteractive();
-        fullscreenButton.on('pointerup', function () {
-          console.log ("mal-logging")
-          click.play();
-          if (this.scale.isFullscreen) {
-            this.scale.stopFullscreen();
-          }    
-          else {
-            this.scale.startFullscreen();
-          }
-      }, {}, this);  
+      fullscreenButton.setInteractive();
+      fullscreenButton.on('pointerup', function () {
+        console.log ("mal-logging")
+        click.play();
+        if (this.scale.isFullscreen) {
+          this.scale.stopFullscreen();
+        }    
+        else {
+          this.scale.startFullscreen();
+        }
+      }, this);  
       
       const goDeeperButton = this.add.image(400, 700, 'goDeeper1');
-        goDeeperButton.setInteractive();
-        goDeeperButton.on('pointerup', function () {
-          click.play();
-          this.time.delayedCall(500, function () {
-            this.scene.start('RaidScene');
-          }, {}, this);
-        }, this);
+      goDeeperButton.setInteractive();
+      goDeeperButton.on('pointerup', function () {
+        click.play();
+        this.time.delayedCall(500, function () {
+          this.scene.start('RaidScene');
+        }, {}, this);
+      }, this);
     },
 
     update: function (gameTime) {
