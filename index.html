@@ -420,7 +420,7 @@
         this.scene.start('IntroScene');
       }
 
-      if (mechanicActive && globalClock > mechanicFireTime) {¥
+      if (mechanicActive && globalClock > mechanicFireTime) {
         currentMechanic.damageAnimation(this, boss);
         // check for damage
         pawns.getChildren().forEach(pawn => {
@@ -527,7 +527,12 @@
         checkStop(pawn, pawn.targetLocation);
       }
 
+      const checkDeath = (pawn) => {
+
+      }
+
       pawns.getChildren().forEach(pawn => {
+        checkDeath(pawn);
         pawnAttack(pawn);
         movePawn(pawn);
       }, this);
