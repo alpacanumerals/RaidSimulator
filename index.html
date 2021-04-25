@@ -105,8 +105,8 @@
       this.load.image('title', 'assets/title.png');
       this.load.image('fullscreen1', 'assets/button-fullscreen-1.png');
       this.load.image('fullscreen2', 'assets/button-fullscreen-2.png');
-      this.load.image('goDeeper1', 'assets/button-godeeper-1.png');
-      this.load.image('goDeeper2', 'assets/button-godeeper-2.png');
+      this.load.image('start1', 'assets/button-start-1.png');
+      this.load.image('start2', 'assets/button-start-2.png');
       this.load.audio('click', 'assets/se-type.wav');
     },
 
@@ -114,10 +114,14 @@
       this.add.image(960, 540, "title");
       click = this.sound.add("click");
 
-      const fullscreenButton = this.add.image(400, 600, "fullscreen1");
+      var fullscreenButton = this.add.image(400, 600, "fullscreen1");
       fullscreenButton.setInteractive();
-      fullscreenButton.on('pointerup', function () {
+      fullscreenButton.on('pointerdown', function () {
         console.log ("mal-logging")
+        this.remove.image(400, 600, "fullscreen1");
+        let fullscreenButton = this.add.image(400, 600, "fullscreen2");
+      }, this);  
+      fullscreenButton.on('pointerup', function () {
         click.play();
         if (this.scale.isFullscreen) {
           this.scale.stopFullscreen();
@@ -127,7 +131,7 @@
         }
       }, this);  
       
-      const goDeeperButton = this.add.image(400, 700, 'goDeeper1');
+      var goDeeperButton = this.add.image(400, 700, 'start1');
       goDeeperButton.setInteractive();
       goDeeperButton.on('pointerup', function () {
         click.play();
