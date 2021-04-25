@@ -7,6 +7,7 @@
 
   <script>
 
+  // constants for gameplay to refer to. some of these may stop being constants for e.g. boss variance
   const raidZone = new Phaser.Geom.Rectangle(480, 0, 1440, 1080);
   const startZone = new Phaser.Geom.Circle(960, 720, 100);
 
@@ -15,6 +16,7 @@
   const bossMaxHp = 100000;
   const pawnDamage = 200;
 
+  // variables to hold objects that need to persist outside of create/update function calls
   var player;
   var boss;
 
@@ -35,6 +37,7 @@
 
   var mechanics;
 
+  // the first scene players see
   const IntroScene = new Phaser.Class({
     Extends: Phaser.Scene,
 
@@ -59,6 +62,7 @@
     update: function () {},
   })
 
+  // the gameplay. this should later be able to be called with different boss behaviour
   const RaidScene = new Phaser.Class({
 
     Extends: Phaser.Scene,
@@ -97,8 +101,36 @@
         chargeTime: 5000,
         damage: 100,
         damageAnimation: null,
-        checkDamageZone: (pawn) => {}, 
-        getSafeLocation: (pawn, boss) => {},
+        checkDamageZone: (pawn, boss) => {
+          return Phaser.Math.Distance.Between(pawn.x, pawn.y, boss.x, boss.y) < 200;
+        }, 
+        getSafeLocation: (pawn, boss) => {
+          // pretend circle is rectangle for tractability
+          // pick random x in play area
+          // pick y that is not inside rectangle
+          const minDamageX = boss.x - 200;
+          const maxDamageX = boss.x + 200;
+
+          var y;
+          const x = Phaser.Math.RND.between(leftPlayBound, rightPlayBound);
+          if (x < minDamageX || x > maxDamageX) {
+            y = Phaser.Math.RND.between(topPlayBound, bottomPlayBound);
+          } else {
+            const minDamageY = boss.y - 200;
+            const maxDamageY = boss.y + 200;
+            const topMargin = minDamageY - topPlayBound;
+            const bottomMargin = bottomPlayBound - maxDamageY;
+            if (topMargin <= 0) {
+              y = Phaser.Math.RND.between(maxDamageY, bottomPlayBound);
+            } else if (bottomMargin <= 0) {
+              y = Phaser.Math.RND.between(topPlayBound, minDamageY);
+            } else {
+              const ratio = topMargin/(topMargin + bottomMargin);
+
+            }
+          }
+          return new Phaser.Math.Vector2(x, y);
+        },
       };
 
       particles = this.add.particles('spark');
@@ -106,6 +138,7 @@
       player = this.physics.add.image(960, 720, 'player');
       playerTarget = this.physics.add.image(960, 720, 'playerTarget');
 
+      // pawn creation start
       const defineAnims = () => {
         const rate = 1;
         const repeat = 1;
@@ -247,6 +280,7 @@
         pawn.pawnMoveInterval = Phaser.Math.RND.between(100, 400)
         pawn.nextPawnMoveTime = pawn.pawnMoveInterval;
       }, this);
+      // pawn creation end
 
       boss = this.physics.add.image(960, 200, 'boss')
 
