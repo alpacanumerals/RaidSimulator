@@ -10,13 +10,18 @@
   // constants for gameplay to refer to. some of these may stop being constants for e.g. boss variance
   //Strictly a testing comment line.
 
-  const raidZone = new Phaser.Geom.Rectangle(480, 0, 1440, 1080);
+  const leftPlayBound = 480;
+  const rightPlayBound = 1440;
+  const topPlayBound = 0;
+  const bottomPlayBound = 1080;
+
+  const raidZone = new Phaser.Geom.Rectangle(leftPlayBound, topPlayBound, rightPlayBound, bottomPlayBound);
   const startZone = new Phaser.Geom.Circle(960, 720, 100);
 
   const damageRange = 100;
   const bossMoveInterval = 5000;
   const bossMechanicInterval = 10000;
-  const bossMaxHp = 100000;
+  const bossMaxHp = 1000000;
   const pawnDamage = 200;
 
   //sorry for the big definition here!
@@ -294,6 +299,7 @@
         pawn.nextPawnAttackTime = globalClock + pawn.pawnAttackInterval
         pawn.pawnMoveInterval = Phaser.Math.RND.between(100, 400)
         pawn.nextPawnMoveTime = globalClock + pawn.pawnMoveInterval;
+        pawn.respondingToMechanic = false;
       }, this);
       // pawn creation end
 
@@ -328,6 +334,8 @@
       if (mechanicActive && globalClock > mechanicFireTime) {
         // play anim
         // check for damage
+        // turn off mechanic response
+        pawns.getChildren().forEach(pawn => {pawn.respondingToMechanic = false}, this);
         nextMechanicTime = globalClock + bossMechanicInterval;
         mechanicActive = false;
         mechanicText.setText('No Mechanic')
@@ -337,6 +345,7 @@
         mechanicActive = true;
         currentMechanic = circleAoe; // this will later need to be from somewhere
         mechanicFireTime = globalClock + currentMechanic.chargeTime;
+        nextBossMoveTime = mechanicFireTime + bossMoveInterval;
         mechanicText.setText('Mechanic Active!')
       }
 
@@ -375,11 +384,14 @@
         if (gameTime > pawn.nextPawnMoveTime) {
           pawn.nextPawnMoveTime = globalClock + pawn.pawnMoveInterval;
           if (mechanicActive) {
-            console.log("Unreachable code, something has gone wrong");
-            // if already responding, keep going
-            // if NOT then
-            // -if know mechanic, go to safe zone
-            // -else flock (concern.jpg)
+            if (true) { // knows mechanic check
+              if (!pawn.respondingToMechanic) {
+                pawn.respondingToMechanic = true;
+                pawn.targetLocation = currentMechanic.getSafeLocation(pawn, boss);
+                this.physics.moveToObject(pawn, pawn.targetLocation, 240);
+              }
+            }
+            // flock, or freeze in headlights since that isn't done yet!
           } else {
             if (!bossDamageCircle.contains(pawn.x, pawn.y)) {
               pawn.targetLocation = Phaser.Geom.Circle.Random(bossDamageCircle);
