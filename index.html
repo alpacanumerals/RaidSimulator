@@ -421,6 +421,7 @@
         this.scene.start('IntroScene');
       }
 
+      // resolve end-of-mechanic when it is time to fire
       if (mechanicActive && globalClock > mechanicFireTime) {
         currentMechanic.damageAnimation(this, boss);
         // check for damage
@@ -437,6 +438,7 @@
         mechanicText.setText('No Mechanic')
       }
 
+      // start a mechanic if it is time to charge one
       if (!mechanicActive && globalClock > nextMechanicTime) {
         mechanicActive = true;
         currentMechanic = circleAoe; // this will later need to be from somewhere
@@ -445,6 +447,7 @@
         mechanicText.setText('Mechanic Active!')
       }
 
+      // a generic function used to check if an object has reached its target and stop it if so
       const checkStop = (object, target) => {
         var distance = Phaser.Math.Distance.Between(object.x, object.y, target.x, target.y);
         if (object.body.speed > 0 && distance < 8)
@@ -453,6 +456,7 @@
         }
       }
 
+      // move the boss if it is time
       if (gameTime > nextBossMoveTime) {
         nextBossMoveTime = globalClock + bossMoveInterval;
         bossTarget.x = Phaser.Math.RND.between(480, 1440);
@@ -460,8 +464,10 @@
         this.physics.moveToObject(boss, bossTarget, 240);
       }
 
+      // locate the boss damage circle for later reference
       const bossDamageCircle = new Phaser.Geom.Circle(boss.x, boss.y, damageRange);
 
+      // pawns call this to handle their attack
       const pawnAttack = (pawn) => {
         if (gameTime > pawn.nextPawnAttackTime) {
           if (bossDamageCircle.contains(pawn.x, pawn.y)) {
@@ -472,6 +478,7 @@
         }
       }
 
+      // pawns in flocking mode use this to determine their movement
       const flockPawn = (pawn) => {
         var targetX = 0;
         var targetY = 0;
