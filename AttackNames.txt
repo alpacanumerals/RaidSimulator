@@ -1,0 +1,77 @@
+//Deep Crystal (Picks one of each list.)
+[
+"Deafening Flash"
+"Nauseating Light"
+"Cutting Visions"
+"Bitter Memories"
+]
+[
+"Blinding Screech"
+"Pungent Whispers"
+"Piercing Silence"
+"A Spicy Boom"
+]
+[
+"Iridiscent Breath"
+"Discordant Fumes"
+"Sharp Scent"
+"Mustard Gas"
+]
+[
+"Shimmering Slash"
+"Cacaphonic Aura"
+"Sickly Sweet Slam"
+"Hot Beats"
+]
+
+//Forgiven Cuteness (1-2 per list?)
+[
+"Dancing Mad"
+"Douncing Mad"
+"Prancing Mad"
+"Pouncing Mad"
+"Gyring Mad"
+"Gymbling Mad"
+]
+"Whirling Whack"
+"Flamboyant Flail"
+"Reckless Roll"
+"Exuberant Excess"
+"Thundering Thump"
+"Heedless Headbutt"
+]
+[
+"Cheek Star Cannon"
+"Eye Beams"
+"Pom Blaster"
+"Eary Slash"
+]
+
+//Dark Vermilion
+[
+"Sword Kick"
+"Sickle Kick"
+"Hammer Kick"
+"Heel Kick"
+]
+[
+"Driven Flames"
+"Drawn Flames"
+"Sweeping Flames"
+"Channeled Flames"
+[
+"<3"
+"XD"
+"Uwu"
+]
+[
+"Underdark Eternity"
+"Underdark Blaster"
+"Underdark Flare"
+"Underdark Radiance"
+]
+[
+"Vermilion Air"
+"Express Without Remorse"
+"Bioluminescence"
+]
