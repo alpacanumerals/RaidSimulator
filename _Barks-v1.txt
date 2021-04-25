@@ -1,0 +1,73 @@
+//Pre-Raid Barks are played before the first boss only.
+//Pre-Raid Neutral (indicates nothing)
+[
+"o7"
+"Yo"
+"Hello"
+"Henlo"
+"How's everyone today?"
+"Good morning Gamers"
+]
+
+//Pre-Raid Newbie (indicates pawn is a newbie though only a few newbies will actually play these)
+[
+"First time!"
+"Hello, first time here."
+"First time here."
+]
+
+//Pre-Raid Experienced (indicates at least some experience but not necessarily competence)
+[
+"Bioluminescence is real!"
+"Wow, this has been popping a lot."
+"I am only here for the Cuteness partition."
+]
+
+//Death Barks play on deaths occuring from a mechanic stage.
+//Schadenfreude (Chance of being played if at least one death occurred during mechanic but pawn is still alive with high Confidence.)
+[
+"lol"
+"rekt"
+"rip"
+]
+
+//Dead - Stood in wrong location.
+[
+"lol"
+"omg"
+"Whoops!"
+"Oh."
+"Right."
+"Welp."
+]
+
+//Dead - Poor positioning near the correct location.
+[
+"wtf?"
+"omg"
+"rip me"
+"Wow, lag much?"
+"derp"
+]
+
+//Wipe (Played on wipe.)
+[
+"lol"
+"omg"
+"rip"
+]
+
+//Wipe Pre-Retry
+[
+"Okay, can someone explain before we pull?"
+]
+
+
+
+
+
+
+
+
+
+
