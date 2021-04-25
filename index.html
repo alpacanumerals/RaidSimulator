@@ -8,7 +8,7 @@
 
   <script>
   // constants for gameplay to refer to. some of these may stop being constants for e.g. boss variance
-//Strictly a testing comment line.
+  //Strictly a testing comment line.
 
   const raidZone = new Phaser.Geom.Rectangle(480, 0, 1440, 1080);
   const startZone = new Phaser.Geom.Circle(960, 720, 100);
@@ -18,6 +18,45 @@
   const bossMechanicInterval = 10000;
   const bossMaxHp = 100000;
   const pawnDamage = 200;
+
+  //sorry for the big definition here!
+  const circleAoe = {
+        name: 'initialise this from the list somehow',
+        chargeTime: 5000,
+        damage: 100,
+        damageAnimation: null,
+        checkDamageZone: (pawn, boss) => {
+          return Phaser.Math.Distance.Between(pawn.x, pawn.y, boss.x, boss.y) < 200;
+        }, 
+        getSafeLocation: (pawn, boss) => {
+          // pretend circle is rectangle for tractability
+          // pick random x in play area
+          // pick y that is not inside rectangle
+          const minDamageX = boss.x - 200;
+          const maxDamageX = boss.x + 200;
+
+          var y;
+          const x = Phaser.Math.RND.between(leftPlayBound, rightPlayBound);
+          if (x < minDamageX || x > maxDamageX) {
+            y = Phaser.Math.RND.between(topPlayBound, bottomPlayBound);
+          } else {
+            const minDamageY = boss.y - 200;
+            const maxDamageY = boss.y + 200;
+            const topMargin = minDamageY - topPlayBound;
+            const bottomMargin = bottomPlayBound - maxDamageY;
+            if (topMargin <= 0) {
+              y = Phaser.Math.RND.between(maxDamageY, bottomPlayBound);
+            } else if (bottomMargin <= 0) {
+              y = Phaser.Math.RND.between(topPlayBound, minDamageY);
+            } else {
+              const ratio = topMargin/(topMargin + bottomMargin);
+              const above = Math.random() < ratio;
+              y = above ? Phaser.Math.RND.between(maxDamageY, bottomPlayBound) : Phaser.Math.RND.between(topPlayBound, minDamageY);
+            }
+          }
+          return new Phaser.Math.Vector2(x, y);
+        },
+      };
 
   // variables to hold objects that need to persist outside of create/update function calls
   var player;
@@ -32,11 +71,13 @@
 
   var timeText;
   var bossHealthText;
+  var mechanicText;
 
-  var nextMechanicTime;
   var nextBossMoveTime;
   var bossHealth;
 
+  var nextMechanicTime;
+  var mechanicFireTime;
   var mechanicActive;
   var currentMechanic;
 
@@ -112,44 +153,7 @@
     },
 
     create: function (gameTime) {
-      const circleAoe = {
-        name: 'initialise this from the list somehow',
-        chargeTime: 5000,
-        damage: 100,
-        damageAnimation: null,
-        checkDamageZone: (pawn, boss) => {
-          return Phaser.Math.Distance.Between(pawn.x, pawn.y, boss.x, boss.y) < 200;
-        }, 
-        getSafeLocation: (pawn, boss) => {
-          // pretend circle is rectangle for tractability
-          // pick random x in play area
-          // pick y that is not inside rectangle
-          const minDamageX = boss.x - 200;
-          const maxDamageX = boss.x + 200;
-
-          var y;
-          const x = Phaser.Math.RND.between(leftPlayBound, rightPlayBound);
-          if (x < minDamageX || x > maxDamageX) {
-            y = Phaser.Math.RND.between(topPlayBound, bottomPlayBound);
-          } else {
-            const minDamageY = boss.y - 200;
-            const maxDamageY = boss.y + 200;
-            const topMargin = minDamageY - topPlayBound;
-            const bottomMargin = bottomPlayBound - maxDamageY;
-            if (topMargin <= 0) {
-              y = Phaser.Math.RND.between(maxDamageY, bottomPlayBound);
-            } else if (bottomMargin <= 0) {
-              y = Phaser.Math.RND.between(topPlayBound, minDamageY);
-            } else {
-              const ratio = topMargin/(topMargin + bottomMargin);
-              const above = Math.random() < ratio;
-              y = above ? Phaser.Math.RND.between(maxDamageY, bottomPlayBound) : Phaser.Math.RND.between(topPlayBound, minDamageY);
-            }
-          }
-          return new Phaser.Math.Vector2(x, y);
-        },
-      };
-
+      // currently not used, was hoping to turn into player attacks later
       particles = this.add.particles('spark');
 
       player = this.physics.add.image(960, 720, 'player');
@@ -310,10 +314,13 @@
 
       timeText = this.add.text(10, 10, 'Time: ', { fill: '#00ff00' });
       bossHealthText = this.add.text(10, 30, 'Boss Hp: ', { fill: '#00ff00' });
+      mechanicText = this.add.text(10, 50, 'No Mechanic', { fill: '#00ff00' });
+
       nextBossMoveTime = globalClock + bossMoveInterval;
       bossHealth = bossMaxHp;
 
       mechanicActive = false;
+      nextMechanicTime = globalClock + bossMechanicInterval;
     },
 
     update: function(gameTime, delta) {
@@ -324,8 +331,19 @@
         this.scene.start('IntroScene');
       }
 
-      if (globalClock > nextMechanicTime) {
+      if (mechanicActive && globalClock > mechanicFireTime) {
+        // play anim
+        // check for damage
+        nextMechanicTime = globalClock + bossMechanicInterval;
+        mechanicActive = false;
+        mechanicText.setText('No Mechanic')
+      }
 
+      if (!mechanicActive && globalClock > nextMechanicTime) {
+        mechanicActive = true;
+        currentMechanic = circleAoe; // this will later need to be from somewhere
+        mechanicFireTime = globalClock + currentMechanic.chargeTime;
+        mechanicText.setText('Mechanic Active!')
       }
 
       const checkStop = (object, target) => {
