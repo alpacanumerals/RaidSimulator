@@ -104,9 +104,9 @@
     preload: function () {
       this.load.image('title', 'assets/title.png');
       this.load.image('fullscreen1', 'assets/button-fullscreen-1.png');
-      this.load.image('fullscreen2', 'assets/button-fullscreen-2.png');
+      //this.load.image('fullscreen2', 'assets/button-fullscreen-2.png');
       this.load.image('start1', 'assets/button-start-1.png');
-      this.load.image('start2', 'assets/button-start-2.png');
+      //this.load.image('start2', 'assets/button-start-2.png');
       this.load.audio('click', 'assets/se-type.wav');
     },
 
@@ -117,11 +117,6 @@
       var fullscreenButton = this.add.image(400, 600, "fullscreen1");
       fullscreenButton.setInteractive();
       fullscreenButton.on('pointerdown', function () {
-        console.log ("mal-logging")
-        this.remove.image(400, 600, "fullscreen1");
-        let fullscreenButton = this.add.image(400, 600, "fullscreen2");
-      }, this);  
-      fullscreenButton.on('pointerup', function () {
         click.play();
         if (this.scale.isFullscreen) {
           this.scale.stopFullscreen();
@@ -131,9 +126,9 @@
         }
       }, this);  
       
-      var goDeeperButton = this.add.image(400, 700, 'start1');
-      goDeeperButton.setInteractive();
-      goDeeperButton.on('pointerup', function () {
+      var startButton = this.add.image(400, 700, 'start1');
+      startButton.setInteractive();
+      startButton.on('pointerdown', function () {
         click.play();
         this.time.delayedCall(500, function () {
           this.scene.start('RaidScene');
