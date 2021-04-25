@@ -25,28 +25,30 @@
   const pawnDamage = 200;
 
   //sorry for the big definition here!
+  circleAoeRadius = 500;
   const circleAoe = {
         name: 'initialise this from the list somehow',
         chargeTime: 5000,
         damage: 100,
         damageAnimation: null,
+        damageRadius: 500,
         checkDamageZone: (pawn, boss) => {
-          return Phaser.Math.Distance.Between(pawn.x, pawn.y, boss.x, boss.y) < 200;
+          return Phaser.Math.Distance.Between(pawn.x, pawn.y, boss.x, boss.y) < circleAoeRadius;
         }, 
         getSafeLocation: (pawn, boss) => {
           // pretend circle is rectangle for tractability
           // pick random x in play area
           // pick y that is not inside rectangle
-          const minDamageX = boss.x - 200;
-          const maxDamageX = boss.x + 200;
+          const minDamageX = boss.x - circleAoeRadius;
+          const maxDamageX = boss.x + circleAoeRadius;
 
           var y;
           const x = Phaser.Math.RND.between(leftPlayBound, rightPlayBound);
           if (x < minDamageX || x > maxDamageX) {
             y = Phaser.Math.RND.between(topPlayBound, bottomPlayBound);
           } else {
-            const minDamageY = boss.y - 200;
-            const maxDamageY = boss.y + 200;
+            const minDamageY = boss.y - circleAoeRadius;
+            const maxDamageY = boss.y + circleAoeRadius;
             const topMargin = minDamageY - topPlayBound;
             const bottomMargin = bottomPlayBound - maxDamageY;
             if (topMargin <= 0) {
