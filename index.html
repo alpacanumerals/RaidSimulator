@@ -14,6 +14,7 @@
 
   const damageRange = 100;
   const bossMoveInterval = 5000;
+  const bossMechanicInterval = 10000;
   const bossMaxHp = 100000;
   const pawnDamage = 200;
 
@@ -31,12 +32,16 @@
   var timeText;
   var bossHealthText;
 
+  var nextMechanicTime;
   var nextBossMoveTime;
   var bossHealth;
 
   var mechanicActive;
+  var currentMechanic;
 
   var mechanics;
+
+  var globalClock;
 
   // the first scene players see
   const IntroScene = new Phaser.Class({
@@ -60,7 +65,9 @@
       }, this);
     },
 
-    update: function () {},
+    update: function (gameTime) {
+      globalClock = gameTime;
+    },
   })
 
   // the gameplay. this should later be able to be called with different boss behaviour
@@ -96,7 +103,7 @@
       this.load.spritesheet('pawnbottom3', 'assets/pawnlegs1.png', { frameWidth: 48, frameHeight: 36 });
     },
 
-    create: function () {
+    create: function (gameTime) {
       const circleAoe = {
         name: 'initialise this from the list somehow',
         chargeTime: 5000,
@@ -127,7 +134,8 @@
               y = Phaser.Math.RND.between(topPlayBound, minDamageY);
             } else {
               const ratio = topMargin/(topMargin + bottomMargin);
-
+              const above = Math.random() < ratio;
+              y = above ? Phaser.Math.RND.between(maxDamageY, bottomPlayBound) : Phaser.Math.RND.between(topPlayBound, minDamageY);
             }
           }
           return new Phaser.Math.Vector2(x, y);
@@ -277,9 +285,9 @@
       pawns.getChildren().forEach(pawn => {
         pawn.targetLocation = new Phaser.Geom.Point(pawn.x, pawn.y);
         pawn.pawnAttackInterval = Phaser.Math.RND.between(250, 400)
-        pawn.nextPawnAttackTime = pawn.pawnAttackInterval
+        pawn.nextPawnAttackTime = globalClock + pawn.pawnAttackInterval
         pawn.pawnMoveInterval = Phaser.Math.RND.between(100, 400)
-        pawn.nextPawnMoveTime = pawn.pawnMoveInterval;
+        pawn.nextPawnMoveTime = globalClock + pawn.pawnMoveInterval;
       }, this);
       // pawn creation end
 
@@ -294,17 +302,22 @@
 
       timeText = this.add.text(10, 10, 'Time: ', { fill: '#00ff00' });
       bossHealthText = this.add.text(10, 30, 'Boss Hp: ', { fill: '#00ff00' });
-      nextBossMoveTime = bossMoveInterval;
+      nextBossMoveTime = globalClock + bossMoveInterval;
       bossHealth = bossMaxHp;
 
       mechanicActive = false;
     },
 
     update: function(gameTime, delta) {
-      timeText.setText('Time: ' + gameTime);
+      globalClock = gameTime;
+      timeText.setText('Time: ' + globalClock);
       bossHealthText.setText(bossHealth + '/' + bossMaxHp);
       if (bossHealth <= 0) {
         this.scene.start('IntroScene');
+      }
+
+      if (globalClock > nextMechanicTime) {
+
       }
 
       const checkStop = (object, target) => {
@@ -316,7 +329,7 @@
       }
 
       if (gameTime > nextBossMoveTime) {
-        nextBossMoveTime = gameTime + bossMoveInterval;
+        nextBossMoveTime = globalClock + bossMoveInterval;
         bossTarget.x = Phaser.Math.RND.between(480, 1440);
         bossTarget.y = Phaser.Math.RND.between(0, 1080);
         this.physics.moveToObject(boss, bossTarget, 240);
@@ -340,7 +353,7 @@
           // components.forEach(component => component.anims.play(component._downAnimKey))
         }
         if (gameTime > pawn.nextPawnMoveTime) {
-          pawn.nextPawnMoveTime = gameTime + pawn.pawnMoveInterval;
+          pawn.nextPawnMoveTime = globalClock + pawn.pawnMoveInterval;
           if (mechanicActive) {
             console.log("Unreachable code, something has gone wrong");
             // if already responding, keep going
