@@ -389,6 +389,7 @@
         pawn.nextPawnMoveTime = globalClock + pawn.pawnMoveInterval;
         pawn.respondingToMechanic = false;
         pawn.currentHealth = pawnMaxHp;
+        pawn.knowsMechanic = Math.random() < 0.25 ? true : false;
       }, this);
       // pawn creation end
 
@@ -509,14 +510,16 @@
         if (gameTime > pawn.nextPawnMoveTime) {
           pawn.nextPawnMoveTime = globalClock + pawn.pawnMoveInterval;
           if (mechanicActive) {
-            if (true) { // knows mechanic check
+            if (pawn.knowsMechanic) { // knows mechanic check
               if (!pawn.respondingToMechanic) {
                 pawn.respondingToMechanic = true;
                 pawn.targetLocation = currentMechanic.getSafeLocation(pawn, boss);
                 this.physics.moveToObject(pawn, pawn.targetLocation, 240);
               }
+            } else {
+              // if you don't know the mechanic, follow the crowd
+              flockPawn(pawn);
             }
-            // flock, or freeze in headlights since that isn't done yet!
           } else {
             if (!bossDamageCircle.contains(pawn.x, pawn.y)) {
               pawn.targetLocation = Phaser.Geom.Circle.Random(bossDamageCircle);
