@@ -60,6 +60,8 @@
 
   var graphics;
 
+  var bossTitle = ["Lv50  Forgiven Cuteness"]
+
   //pawn variables
   var pawns;
   var twentyThreeNames = [
