@@ -41,6 +41,7 @@ const RaidScene = new Phaser.Class({
       //MALCODE STARTS
       //Testing Layout
       const pawnCardStyle = {fontFamily: "Trebuchet MS", fontSize: "16px", fill: '#66ffff' }
+      const nameTagStyle = {fontFamily: "Trebuchet MS", fontSize: "12px", fill: '#66ffff' }
 
       P01 = this.add.text(55, -85, "Player", pawnCardStyle);
       P02 = this.add.text(55, -45, "Player", pawnCardStyle);
@@ -410,10 +411,16 @@ const RaidScene = new Phaser.Class({
         legSprite._downAnimKey = legDownAnims[legIndex];
         legSprite._rightAnimKey = legRightAnims[legIndex];
 
-        container.add(legSprite)
-        container.add(torsoSprite)
-        container.add(headSprite)
-        container.add(hairSprite)
+        //get a name (temporary garbage code)
+        const nameIndex = getRandomIndex(twentyThreeNames);
+        const pawnName = twentyThreeNames[nameIndex];
+        nameTag = this.add.text(-25, -110, pawnName, nameTagStyle);
+
+        container.add(legSprite);
+        container.add(torsoSprite);
+        container.add(headSprite);
+        container.add(hairSprite);
+        container.add(nameTag);
       }
 
       pawns = this.physics.add.group();
