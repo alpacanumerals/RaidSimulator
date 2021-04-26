@@ -281,6 +281,7 @@ const RaidScene = new Phaser.Class({
           repeat: repeat
         });
 
+        //pawnlegs are numbered separately. They go into the same slot as pawnbottoms but take skin tint.
         this.anims.create({
           key: 'legs1up',
           frames: this.anims.generateFrameNumbers('pawnlegs1', { frames: [0] }),
@@ -306,7 +307,7 @@ const RaidScene = new Phaser.Class({
           repeat: repeat
         });
       }
-      //Actually defining the anims!!!
+      //Actually defining the animations.
       defineAnims();
 
       //Composing pawns from here.
@@ -316,14 +317,17 @@ const RaidScene = new Phaser.Class({
         }
         // get legs
         const legKeys = ['pawnbottom1', 'pawnbottom2', 'pawnlegs1'];
+        const legUpAnims = ['bottom1up', 'bottom2up', 'legs1up'];
+        const legLeftAnims = ['bottom1left', 'bottom2left', 'legs1left'];
         const legDownAnims = ['bottom1down', 'bottom2down', 'legs1down'];
+        const legRightAnims = ['bottom1right', 'bottom2right', 'legs1right'];
         const legIndex = getRandomIndex(legKeys);
         const legKey = legKeys[legIndex];
         var legSprite = this.add.sprite(0, -18, legKey);
+        legSprite._upAnimKey = legUpAnims[legIndex];
+        legSprite._leftAnimKey = legLeftAnims[legIndex];
         legSprite._downAnimKey = legDownAnims[legIndex];
-        legSprite._leftAnimKey = legDownAnims[legIndex];
-        legSprite._upAnimKey = legDownAnims[legIndex];
-        legSprite._rightAnimKey = legDownAnims[legIndex];
+        legSprite._rightAnimKey = legRightAnims[legIndex];
         container.add(legSprite)
 
         // get torso
