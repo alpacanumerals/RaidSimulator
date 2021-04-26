@@ -87,4 +87,5 @@
     "Vivi Vivi'anna",
     "Jana Oltera"
   ];
-  var playerName = ["Raid' Simulator"];
+  var playerName = "Raid' Simulator";
+  var cardNames = [];

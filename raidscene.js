@@ -384,7 +384,8 @@ const RaidScene = new Phaser.Class({
         //get a name (temporary garbage code)
         const nameIndex = getRandomIndex(twentyThreeNames);
         const pawnName = twentyThreeNames[nameIndex];
-        nameTag = this.add.text(-25, -110, pawnName, nameTagStyle);
+        var nameTag = this.add.text(-25, -110, pawnName, nameTagStyle);
+        cardNames.push(pawnName);
 
         container.add(legSprite);
         container.add(torsoSprite);
@@ -484,31 +485,31 @@ const RaidScene = new Phaser.Class({
       party.add(player);
 
 
-      P01 = this.add.text(55, -85, "Player", pawnCardStyle);
-      P02 = this.add.text(55, -45, "Player", pawnCardStyle);
-      P03 = this.add.text(55, -5, "Player", pawnCardStyle);
-      P04 = this.add.text(55, 35, "Player", pawnCardStyle);
-      P05 = this.add.text(55, 75, "Player", pawnCardStyle);
-      P06 = this.add.text(55, 115, "Player", pawnCardStyle);
-      P07 = this.add.text(55, 155, "Player", pawnCardStyle);
-      P08 = this.add.text(55, 195, "Player", pawnCardStyle);
-      P09 = this.add.text(55, 235, "Player", pawnCardStyle);
-      P10 = this.add.text(55, 275, "Player", pawnCardStyle);
-      P11 = this.add.text(55, 315, "Player", pawnCardStyle);
-      P12 = this.add.text(55, 355, "Player", pawnCardStyle);
+      P01 = this.add.text(55, 15, cardNames[0], pawnCardStyle);
+      P02 = this.add.text(55, 55, cardNames[1], pawnCardStyle);
+      P03 = this.add.text(55, 95, cardNames[2], pawnCardStyle);
+      P04 = this.add.text(55, 135, cardNames[3], pawnCardStyle);
+      P05 = this.add.text(55, 175, cardNames[4], pawnCardStyle);
+      P06 = this.add.text(55, 215, cardNames[5], pawnCardStyle);
+      P07 = this.add.text(55, 255, cardNames[6], pawnCardStyle);
+      P08 = this.add.text(55, 295, cardNames[7], pawnCardStyle);
+      P09 = this.add.text(55, 335, cardNames[8], pawnCardStyle);
+      P10 = this.add.text(55, 375, cardNames[9], pawnCardStyle);
+      P11 = this.add.text(55, 415, cardNames[10], pawnCardStyle);
+      P12 = this.add.text(55, 455, cardNames[11], pawnCardStyle);
 
-      P13 = this.add.text(325, -85, "Player", pawnCardStyle);
-      P14 = this.add.text(325, -45, "Player", pawnCardStyle);
-      P15 = this.add.text(325, -5, "Player", pawnCardStyle);
-      P16 = this.add.text(325, 35, "Player", pawnCardStyle);
-      P17 = this.add.text(325, 75, "Player", pawnCardStyle);
-      P18 = this.add.text(325, 115, "Player", pawnCardStyle);
-      P19 = this.add.text(325, 155, "Player", pawnCardStyle);
-      P20 = this.add.text(325, 195, "Player", pawnCardStyle);
-      P21 = this.add.text(325, 235, "Player", pawnCardStyle);
-      P22 = this.add.text(325, 275, "Player", pawnCardStyle);
-      P23 = this.add.text(325, 315, "Player", pawnCardStyle);
-      P24 = this.add.text(325, 355, "Player", pawnCardStyle);
+      P13 = this.add.text(325, 15, cardNames[12], pawnCardStyle);
+      P14 = this.add.text(325, 55, cardNames[13], pawnCardStyle);
+      P15 = this.add.text(325, 95, cardNames[14], pawnCardStyle);
+      P16 = this.add.text(325, 135, cardNames[15], pawnCardStyle);
+      P17 = this.add.text(325, 175, cardNames[16], pawnCardStyle);
+      P18 = this.add.text(325, 215, cardNames[17], pawnCardStyle);
+      P19 = this.add.text(325, 255, cardNames[18], pawnCardStyle);
+      P20 = this.add.text(325, 295, cardNames[19], pawnCardStyle);
+      P21 = this.add.text(325, 335, cardNames[20], pawnCardStyle);
+      P22 = this.add.text(325, 375, cardNames[21], pawnCardStyle);
+      P23 = this.add.text(325, 415, cardNames[22], pawnCardStyle);
+      P24 = this.add.text(325, 455, playerName, pawnCardStyle);
   },
 
   update: function(gameTime) {
