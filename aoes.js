@@ -6,7 +6,7 @@ const circleAoe = {
   damage: 600,
   damageAnimation: (_this, boss) => {
     var damageCircle = _this.add.circle(boss.x, boss.y, circleAoeRadius, 0x6666ff);
-      _this.tweens.add({
+    _this.tweens.add({
       targets: damageCircle,
       alpha: 0,
       yoyo: false,
@@ -54,9 +54,6 @@ const crossAoe = {
   chargeTime: 5000,
   damage: 600,
   damageAnimation: (_this, boss) => {
-    const margin = crossWidth/2;
-    // var damageRect1 = _this.add.rectangle(leftPlayBound, boss.y-margin, rightPlayBound, boss.y+margin, 0x6666ff);
-    // var damageRect2 = _this.add.rectangle(boss.x-margin, topPlayBound, boss.x+margin, bottomPlayBound, 0x6666ff);
     var damageRect1 = _this.add.rectangle(raidZoneCentreX, boss.y, rightPlayBound-leftPlayBound, crossWidth, 0x6666ff);
     var damageRect2 = _this.add.rectangle(boss.x, raidZoneCentreY, crossWidth, bottomPlayBound-topPlayBound, 0x6666ff);
     _this.tweens.add({
@@ -99,3 +96,28 @@ const crossAoe = {
     return new Phaser.Math.Vector2(safeX, safeY);
   }
 }
+
+const raidWide = {
+  name: 'ehnn',
+  chargeTime: 5000,
+  damage: 200,
+  damageAnimation: (_this, boss) => {
+    var damageRect = _this.add.rectangle(raidZoneCentreX, raidZoneCentreY, rightPlayBound-leftPlayBound, bottomPlayBound-topPlayBound, 0x6666ff);
+    _this.tweens.add({
+      targets: damageRect,
+      alpha: 0,
+      yoyo: false,
+      repeat: 0,
+      ease: 'Sine.easeInOut'
+    })
+  },
+  checkDamageZone: (pawn, boss) => {
+    return true;
+  },
+  getSafeLocation: (pawn, boss) => {
+    // just go hang out next to the boss
+    const damageCircle = new Phaser.Geom.Circle(boss.x, boss.y, damageRange);
+
+    return Phaser.Geom.Circle.Random(damageCircle);
+  },
+};
