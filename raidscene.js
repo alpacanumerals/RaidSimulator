@@ -341,7 +341,7 @@ const RaidScene = new Phaser.Class({
         ]
         // Pick a skin colour here since it'll be used for both head and legs if they exist.
         const skinIndex = getRandomIndex(skinTints);
-        var clothingIndex = getRandomIndex(clothingTints)
+        
 
         // get head
         const headKeys = ['pawnhead1'];
@@ -352,8 +352,8 @@ const RaidScene = new Phaser.Class({
         const headIndex = getRandomIndex(headKeys);
         const headKey = headKeys[headIndex];
         var headSprite = this.add.sprite(0, -76, headKey);
-        headSprite._upAnimKey = headUpAnims[headIndex];
         headSprite.setTint(skinTints[skinIndex]);
+        headSprite._upAnimKey = headUpAnims[headIndex];
         headSprite._leftAnimKey = headLeftAnims[headIndex];
         headSprite._downAnimKey = headDownAnims[headIndex];
         headSprite._rightAnimKey = headRightAnims[headIndex];
@@ -367,11 +367,13 @@ const RaidScene = new Phaser.Class({
         const hairIndex = getRandomIndex(hairKeys);
         const hairKey = hairKeys[hairIndex];
         var hairSprite = this.add.sprite(0, -72, hairKey);
+        var clothingIndex = getRandomIndex(clothingTints)
+        hairSprite.setTint(clothingTints[clothingIndex]);
         hairSprite._upAnimKey = hairUpAnims[hairIndex];
         hairSprite._leftAnimKey = hairLeftAnims[hairIndex];
         hairSprite._downAnimKey = hairDownAnims[hairIndex];
         hairSprite._rightAnimKey = hairRightAnims[hairIndex];
-
+        
         // get torso
         const torsoKeys = ['pawnbody1', 'pawnbody2'];
         const torsoUpAnims = ['body1up', 'body2up'];
@@ -380,12 +382,14 @@ const RaidScene = new Phaser.Class({
         const torsoRightAnims = ['body1right', 'body2right'];
         const torsoIndex = getRandomIndex(torsoKeys);
         const torsoKey = torsoKeys[torsoIndex];
-        torsoSprite = this.add.sprite(0, -52, torsoKey);
+        var torsoSprite = this.add.sprite(0, -52, torsoKey);
+        var clothingIndex = getRandomIndex(clothingTints)
+        torsoSprite.setTint(clothingTints[clothingIndex]);
         torsoSprite._upAnimKey = torsoUpAnims[torsoIndex];
         torsoSprite._leftAnimKey = torsoLeftAnims[torsoIndex];
         torsoSprite._downAnimKey = torsoDownAnims[torsoIndex];
         torsoSprite._rightAnimKey = torsoRightAnims[torsoIndex];
-        
+
         // get legs
         const legKeys = ['pawnbottom1', 'pawnbottom2', 'pawnlegs1'];
         const legUpAnims = ['bottom1up', 'bottom2up', 'legs1up'];
@@ -395,6 +399,12 @@ const RaidScene = new Phaser.Class({
         const legIndex = getRandomIndex(legKeys);
         const legKey = legKeys[legIndex];
         var legSprite = this.add.sprite(0, -18, legKey);
+        if (legIndex === 2){
+          legSprite.setTint(skinTints[skinIndex]);
+        } else {
+          var clothingIndex = getRandomIndex(clothingTints);
+          legSprite.setTint(clothingTints[clothingIndex]);
+        }
         legSprite._upAnimKey = legUpAnims[legIndex];
         legSprite._leftAnimKey = legLeftAnims[legIndex];
         legSprite._downAnimKey = legDownAnims[legIndex];
