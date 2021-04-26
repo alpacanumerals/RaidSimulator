@@ -4,13 +4,15 @@
   const topPlayBound = 60;
   const bottomPlayBound = 960;
 
-  const raidZone = new Phaser.Geom.Rectangle(leftPlayBound, topPlayBound, rightPlayBound, bottomPlayBound);
-  const startZone = new Phaser.Geom.Circle(1245, 720, 100);
+  const raidZoneCentreX = (leftPlayBound + rightPlayBound)/2
 
-  const damageRange = 100;
+  const raidZone = new Phaser.Geom.Rectangle(leftPlayBound, topPlayBound, rightPlayBound, bottomPlayBound);
+  const startZone = new Phaser.Geom.Circle(raidZoneCentreX, 720, 100);
+
+  const damageRange = 150;
   const bossMoveInterval = 5000;
   const bossMechanicInterval = 10000;
-  const bossMaxHp = 200000;
+  const bossMaxHp = 1000000;
   const pawnDamage = 200;
   const pawnMaxHp = 1000;
 
@@ -40,3 +42,5 @@
   var mechanics;
 
   var globalClock;
+
+  var graphics;

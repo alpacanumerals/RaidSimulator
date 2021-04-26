@@ -27,20 +27,20 @@ const IntroScene = new Phaser.Class({
     var fullscreenButton = this.add.image(400, 600, "fullscreen1");
     fullscreenButton.setInteractive();
     fullscreenButton.on('pointerdown', function () {
-    fullscreenButton.setTexture("fullscreen2")
-    click.play();
+      fullscreenButton.setTexture("fullscreen2")
+      click.play();
     }, this);
     fullscreenButton.on('pointerout', function () {
-    fullscreenButton.setTexture("fullscreen1")
-    }, {}, this);
+      fullscreenButton.setTexture("fullscreen1")
+      }, {}, this);
     fullscreenButton.on('pointerup', function () {
-    fullscreenButton.setTexture("fullscreen1")
-    if (this.scale.isFullscreen) {
+      fullscreenButton.setTexture("fullscreen1")
+      if (this.scale.isFullscreen) {
         this.scale.stopFullscreen();
-    }    
-    else {
+      }    
+      else {
         this.scale.startFullscreen();
-    }
+      }
     }, this);  
     
     var startButton = this.add.image(400, 700, 'start1');
