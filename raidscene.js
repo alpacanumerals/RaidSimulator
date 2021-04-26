@@ -385,6 +385,7 @@ const RaidScene = new Phaser.Class({
         torsoSprite._leftAnimKey = torsoLeftAnims[torsoIndex];
         torsoSprite._downAnimKey = torsoDownAnims[torsoIndex];
         torsoSprite._rightAnimKey = torsoRightAnims[torsoIndex];
+        
         // get legs
         const legKeys = ['pawnbottom1', 'pawnbottom2', 'pawnlegs1'];
         const legUpAnims = ['bottom1up', 'bottom2up', 'legs1up'];
