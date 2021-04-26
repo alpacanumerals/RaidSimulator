@@ -18,13 +18,13 @@
   const dpsRole = 'DPS';
   const healerRole = 'healer'
 
-  const pawnTankDamage = 100;
+  const pawnTankDamage = 200;
   const pawnTankMaxHp = 2000;
 
-  const pawnDpsDamage = 200;
+  const pawnDpsDamage = 400;
   const pawnDpsMaxHp = 1000;
 
-  const pawnHealDamage = 100;
+  const pawnHealDamage = 200;
   const pawnHealMaxHp = 1000;
   const pawnHealPower = 500;
   const pawnHealTimer = 5000;

@@ -446,7 +446,7 @@ const RaidScene = new Phaser.Class({
         this.physics.world.enable(pawn);
         composePawn(pawn);
         setPawnRole(pawn);
-        pawn.pawnAttackInterval = Phaser.Math.RND.between(250, 400)
+        pawn.pawnAttackInterval = Phaser.Math.RND.between(500, 800)
         pawn.pawnMoveInterval = Phaser.Math.RND.between(100, 400)
         pawn.pawnHealInterval = pawnHealTimer;
         pawns.add(pawn);
@@ -470,7 +470,7 @@ const RaidScene = new Phaser.Class({
       player = this.physics.add.image(raidZoneCentreX, 720, 'player');
       playerTarget = this.physics.add.image(raidZoneCentreX, 720, 'playerTarget');
 
-      player.playerAttackInterval = 250;
+      player.playerAttackInterval = 500;
       player.nextPlayerAttackTime = globalClock + player.playerAttackInterval;
       player.maxHealth = pawnDpsMaxHp;
       player.currentHealth = player.maxHealth;
@@ -677,11 +677,28 @@ const RaidScene = new Phaser.Class({
       }
     }
 
+    // a function used to generate beams
+    const showBeam = (origin, target, colour, speed) => {
+      var beam = this.add.line(0, 0, origin.x, origin.y, target.x, target.y, colour).setOrigin(0,0);
+      beam.setLineWidth(2, 2);
+      this.tweens.add({
+        targets: beam,
+        alpha: 0,
+        yoyo: false,
+        repeat: 0,
+        ease: 'Sine.easeInOut'
+      }).setTimeScale(speed);
+      this.time.delayedCall(2000, function () {
+        beam.destroy();
+      }, {}, this);
+    }
+
     // pawns call this to handle their attack
     const pawnAttack = (pawn) => {
       if (!pawn.keio) {
         if (gameTime > pawn.nextPawnAttackTime) {
           if (bossDamageCircle.contains(pawn.x, pawn.y)) {
+            showBeam(pawn, boss, 0xff0000, 4);
             pawn.nextPawnAttackTime = gameTime + pawn.pawnAttackInterval
             // sfx
             bossHealth = bossHealth - pawn.damageRate;
@@ -723,10 +740,12 @@ const RaidScene = new Phaser.Class({
             // gfx here
             revive(resTarget);
             pawn.nextPawnHealTime = globalClock + pawn.pawnHealInterval;
+            showBeam(pawn, resTarget, 0x0000ff, 1);
           } else if (!!healTarget) {
             // gfx here
             heal(pawn, healTarget);
             pawn.nextPawnHealTime = globalClock + pawn.pawnHealInterval;
+            showBeam(pawn, healTarget, 0x00ff00, 1);
           }
         }
       }
@@ -743,6 +762,7 @@ const RaidScene = new Phaser.Class({
     const playerAttack = (player) => {
       if (!player.keio && gameTime > player.nextPlayerAttackTime) {
         if (bossDamageCircle.contains(player.x, player.y)) {
+          showBeam(player, boss, 0xff0000);
           player.nextPlayerAttackTime = gameTime + player.playerAttackInterval
           // sfx
           bossHealth = bossHealth - player.damageRate;

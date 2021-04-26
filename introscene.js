@@ -46,17 +46,17 @@ const IntroScene = new Phaser.Class({
     var startButton = this.add.image(400, 700, 'start1');
     startButton.setInteractive();
     startButton.on('pointerdown', function () {
-    startButton.setTexture("start2")
-    click.play();
+      startButton.setTexture("start2")
+      click.play();
     }, {}, this);
     startButton.on('pointerout', function () {
-    startButton.setTexture("start1")
+      startButton.setTexture("start1")
     }, {}, this);
     startButton.on('pointerup', function () {
-    startButton.setTexture("start1")
-    this.time.delayedCall(350, function () {
+      startButton.setTexture("start1")
+      this.time.delayedCall(350, function () {
         this.scene.start('RaidScene');
-    }, {}, this);
+      }, {}, this);
     }, this);
   },
 
