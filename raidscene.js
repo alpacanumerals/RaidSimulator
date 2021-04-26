@@ -516,7 +516,9 @@ const RaidScene = new Phaser.Class({
       }, this);
       party.add(player);
 
-//MMO UI generation
+      createHealthBar(boss, 720, 50, 540, 20);
+
+      //MMO UI generation
       P00 = this.add.text(55, 17, cardNames[0], pawnCardStyle);
       P01 = this.add.text(55, 57, cardNames[1], pawnCardStyle);
       P02 = this.add.text(55, 97, cardNames[2], pawnCardStyle);
