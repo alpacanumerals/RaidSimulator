@@ -1,7 +1,9 @@
 //Enough here to start off.
 //Preformed 2-Barrel Memey Names
 [
-""
+  "Wind-up Alpacalypse",
+  "Wind-up Ruruie",
+  "Statistical Mechanics",
 ]
 
 //Meme-y Forenames
