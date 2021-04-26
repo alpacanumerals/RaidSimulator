@@ -571,6 +571,34 @@ const RaidScene = new Phaser.Class({
       p21i = this.add.image(302, 390, "icon-dps");
       p22i = this.add.image(302, 430, "icon-dps");
       p23i = this.add.image(302, 470, "icon-dps");
+      
+      //Health bars now.
+      createHealthBar(player, 302, 50, 470, 20);
+
+      var pawnHealthBars = pawns.getChildren()
+      createHealthBar(pawnHealth[0], 123, 45, 67, 89)
+      createHealthBar(pawnHealth[1], 123, 45, 67, 89)
+      createHealthBar(pawnHealth[2], 123, 45, 67, 89)
+      createHealthBar(pawnHealth[3], 123, 45, 67, 89)
+      createHealthBar(pawnHealth[4], 123, 45, 67, 89)
+      createHealthBar(pawnHealth[5], 123, 45, 67, 89)
+      createHealthBar(pawnHealth[6], 123, 45, 67, 89)
+      createHealthBar(pawnHealth[7], 123, 45, 67, 89)
+      createHealthBar(pawnHealth[8], 123, 45, 67, 89)
+      createHealthBar(pawnHealth[9], 123, 45, 67, 89)
+      createHealthBar(pawnHealth[10], 321, 54, 76, 98)
+      createHealthBar(pawnHealth[11], 321, 54, 76, 98)
+      createHealthBar(pawnHealth[12], 321, 54, 76, 98)
+      createHealthBar(pawnHealth[13], 321, 54, 76, 98)
+      createHealthBar(pawnHealth[14], 321, 54, 76, 98)
+      createHealthBar(pawnHealth[15], 321, 54, 76, 98)
+      createHealthBar(pawnHealth[16], 321, 54, 76, 98)
+      createHealthBar(pawnHealth[17], 321, 54, 76, 98)
+      createHealthBar(pawnHealth[18], 321, 54, 76, 98)
+      createHealthBar(pawnHealth[19], 321, 54, 76, 98)
+      createHealthBar(pawnHealth[20], 321, 54, 76, 98)
+      createHealthBar(pawnHealth[21], 321, 54, 76, 98)
+      createHealthBar(pawnHealth[22], 321, 54, 76, 98)
   },
 
   update: function(gameTime) {
