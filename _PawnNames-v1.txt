@@ -4,105 +4,125 @@
   "Wind-up Alpacalypse",
   "Wind-up Ruruie",
   "Statistical Mechanics",
+  "Foofs Mcfluffs",
+  "Viewing Cutscene",
+  "Brb Cat",
+  "Additional Pylons",
+  "Wistful Alpaca",
+  "Brave Cod",
+  "Ron Tsumo",
+  "Getty Images",
+  "Partly True",
+  "Blackmore Nightseige",
+  "Richard Dank'ly",
+  "Bryn Alstria",
+  "Robert Baladorado",
+  "Kuro Hime",
+  "Dawn Yolrider",
+  "Calradio Mask",
+  "Mibo Ranceperu",
+  "Willis Wayne",
+  "Fam Namez",
+  "Throck Morton",
+  "Selene S'lyvaria",
+  "Vivi Vivi'anna",
+  "Jana Oltera"
 ]
 
 //Meme-y Forenames
 [
-"Bankruptcy"
-"Legal"
+"Bankruptcy",
+"Legal",
 "Statistical"
 ]
 
 //Meme-y Aftnames
 [
-"Mechanics"
-"Protection"
-"Qualification"
+"Mechanics",
+"Protection",
+"Qualification",
 "Representation"
 ]
 
 //Meme-y Names - Any Position
 [
-"Birb"
-"Cat"
-"Catboy"
-"Catgirl"
+"Birb",
+"Cat",
+"Catboy",
+"Catgirl",
 "Doggo"
 ]
 
 
-
-
-
 //Normalish Forenames 
 [
-"Alexis"
-"Bon"
-"Conno"
-"Dia"
-"Eirin"
-"Four"
-"Gorda"
-"Harlock"
-"Ira"
-"Jamie"
-"Kelly"
-"Leigh"
-"Madis"
-"Norn"
-"Or"
-"Pat"
-"Qitana"
-"Robin"
-"Shirley"
-"Tracy"
-"Ura"
-"Vivian"
-"Wyn"
-"Xavi"
-"Ys"
+"Alexis",
+"Bon",
+"Conno",
+"Dia",
+"Eirin",
+"Four",
+"Gorda",
+"Harlock",
+"Ira",
+"Jamie",
+"Kelly",
+"Leigh",
+"Madis",
+"Norn",
+"Or",
+"Pat",
+"Qitana",
+"Robin",
+"Shirley",
+"Tracy",
+"Ura",
+"Vivian",
+"Wyn",
+"Xavi",
+"Ys",
 "Zo"
 ]
 
 //Normalish Aftnames
 
 [
-"Altos"
-"Bella"
-"Corvus"
-"Dara"
-"Einz"
-"Faf"
-"Gallon"
-"Hep"
-"Irin"
-"Jorgen"
-"Kalla"
-"Lala"
-"Meme"
-"North"
-"Opho"
-"Pale"
-"Quincy"
-"Ral"
-"Stan"
-"Tana"
-"Ura"
-"Van"
-"Wall"
-"Xavier"
-"Yan"
+"Altos",
+"Bella",
+"Corvus",
+"Dara",
+"Einz",
+"Faf",
+"Gallon",
+"Hep",
+"Irin",
+"Jorgen",
+"Kalla",
+"Lala",
+"Meme",
+"North",
+"Opho",
+"Pale",
+"Quincy",
+"Ral",
+"Stan",
+"Tana",
+"Ura",
+"Van",
+"Wall",
+"Xavier",
+"Yan",
 "Zyra"
 ]
 
 //Aft Aftnames - Append to the end for more variety!
 [
-"bern"
-"erk"
-"is"
-"leigh"
-"ly"
-"son"
-"sen"
+"bern",
+"erk",
+"is",
+"leigh",
+"ly",
+"son",
+"sen",
 "ters"
 ]
