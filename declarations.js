@@ -62,4 +62,28 @@
   var graphics;
 
   //pawn variables
-  var twentyFourPawns = [];
+  var twentyThreeNames = [
+    "Foofs Mcfluffs",
+    "Viewing Cutscene",
+    "Brb Cat",
+    "Additional Pylons",
+    "Wistful Alpaca",
+    "Brave Cod",
+    "Ron Tsumo",
+    "Getty Images",
+    "Partly True",
+    "Blackmore Nightseige",
+    "Richard Dank'ly",
+    "Bryn Alstria",
+    "Robert Baladorado",
+    "Kuro Hime",
+    "Dawn Yolrider",
+    "Calradio Mask",
+    "Mibo Ranceperu",
+    "Willis Wayne",
+    "Fam Namez",
+    "Throck Morton",
+    "Selene S'lyvaria",
+    "Vivi Vivi'anna",
+    "Jana Oltera"
+  ];
