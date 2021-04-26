@@ -73,13 +73,48 @@ const RaidScene = new Phaser.Class({
       //MALCODE ENDS
 
 
-      // pawn creation start
+      // Pawn animations
+      // Defining how to define the anims
+      // Every pawn segment now and future needs four versions from its spritesheet added in WASD order for consistency
+      // eg. faceup faceleft facedown faceright; frames 0-3
+      // Currently the game loads ALL assets but it might be smarter to load only the ones used if we end up with like 50 heads or something.
       const defineAnims = () => {
         const rate = 1;
         const repeat = 0;
         this.anims.create({
+          key: 'hair1up',
+          frames: this.anims.generateFrameNumbers('pawnhair1', { frames: [0] }),
+          frameRate: rate,
+          repeat: repeat
+        });
+        this.anims.create({
+          key: 'hair1left',
+          frames: this.anims.generateFrameNumbers('pawnhair1', { frames: [1] }),
+          frameRate: rate,
+          repeat: repeat
+        });
+        this.anims.create({
           key: 'hair1down',
           frames: this.anims.generateFrameNumbers('pawnhair1', { frames: [2] }),
+          frameRate: rate,
+          repeat: repeat
+        });
+        this.anims.create({
+          key: 'hair1right',
+          frames: this.anims.generateFrameNumbers('pawnhair1', { frames: [3] }),
+          frameRate: rate,
+          repeat: repeat
+        });
+
+        this.anims.create({
+          key: 'hair2up',
+          frames: this.anims.generateFrameNumbers('pawnhair2', { frames: [0] }),
+          frameRate: rate,
+          repeat: repeat
+        });
+        this.anims.create({
+          key: 'hair2left',
+          frames: this.anims.generateFrameNumbers('pawnhair2', { frames: [1] }),
           frameRate: rate,
           repeat: repeat
         });
@@ -90,22 +125,96 @@ const RaidScene = new Phaser.Class({
           repeat: repeat
         });
         this.anims.create({
+          key: 'hair2right',
+          frames: this.anims.generateFrameNumbers('pawnhair2', { frames: [3] }),
+          frameRate: rate,
+          repeat: repeat
+        });
+
+        this.anims.create({
+          key: 'hair3up',
+          frames: this.anims.generateFrameNumbers('pawnhair3', { frames: [0] }),
+          frameRate: rate,
+          repeat: repeat
+        });
+        this.anims.create({
+          key: 'hair3left',
+          frames: this.anims.generateFrameNumbers('pawnhair3', { frames: [1] }),
+          frameRate: rate,
+          repeat: repeat
+        });
+        this.anims.create({
           key: 'hair3down',
           frames: this.anims.generateFrameNumbers('pawnhair3', { frames: [2] }),
           frameRate: rate,
           repeat: repeat
         });
+        this.anims.create({
+          key: 'hair3right',
+          frames: this.anims.generateFrameNumbers('pawnhair3', { frames: [3] }),
+          frameRate: rate,
+          repeat: repeat
+        });
 
+        this.anims.create({
+          key: 'head1up',
+          frames: this.anims.generateFrameNumbers('pawnhead1', { frames: [0] }),
+          frameRate: rate,
+          repeat: repeat
+        });
+        this.anims.create({
+          key: 'head1left',
+          frames: this.anims.generateFrameNumbers('pawnhead1', { frames: [1] }),
+          frameRate: rate,
+          repeat: repeat
+        });
         this.anims.create({
           key: 'head1down',
           frames: this.anims.generateFrameNumbers('pawnhead1', { frames: [2] }),
           frameRate: rate,
           repeat: repeat
         });
+        this.anims.create({
+          key: 'head1right',
+          frames: this.anims.generateFrameNumbers('pawnhead1', { frames: [3] }),
+          frameRate: rate,
+          repeat: repeat
+        });
 
+        this.anims.create({
+          key: 'body1up',
+          frames: this.anims.generateFrameNumbers('pawnbody1', { frames: [0] }),
+          frameRate: rate,
+          repeat: repeat
+        });
+        this.anims.create({
+          key: 'body1left',
+          frames: this.anims.generateFrameNumbers('pawnbody1', { frames: [1] }),
+          frameRate: rate,
+          repeat: repeat
+        });
         this.anims.create({
           key: 'body1down',
           frames: this.anims.generateFrameNumbers('pawnbody1', { frames: [2] }),
+          frameRate: rate,
+          repeat: repeat
+        });
+        this.anims.create({
+          key: 'body1right',
+          frames: this.anims.generateFrameNumbers('pawnbody1', { frames: [3] }),
+          frameRate: rate,
+          repeat: repeat
+        });
+
+        this.anims.create({
+          key: 'body2up',
+          frames: this.anims.generateFrameNumbers('pawnbody2', { frames: [0] }),
+          frameRate: rate,
+          repeat: repeat
+        });
+        this.anims.create({
+          key: 'body2left',
+          frames: this.anims.generateFrameNumbers('pawnbody2', { frames: [1] }),
           frameRate: rate,
           repeat: repeat
         });
@@ -115,10 +224,47 @@ const RaidScene = new Phaser.Class({
           frameRate: rate,
           repeat: repeat
         });
+        this.anims.create({
+          key: 'body2right',
+          frames: this.anims.generateFrameNumbers('pawnbody2', { frames: [3] }),
+          frameRate: rate,
+          repeat: repeat
+        });
 
+        this.anims.create({
+          key: 'bottom1up',
+          frames: this.anims.generateFrameNumbers('pawnbottom1', { frames: [0] }),
+          frameRate: rate,
+          repeat: repeat
+        });
+        this.anims.create({
+          key: 'bottom1left',
+          frames: this.anims.generateFrameNumbers('pawnbottom1', { frames: [1] }),
+          frameRate: rate,
+          repeat: repeat
+        });
         this.anims.create({
           key: 'bottom1down',
           frames: this.anims.generateFrameNumbers('pawnbottom1', { frames: [2] }),
+          frameRate: rate,
+          repeat: repeat
+        });
+        this.anims.create({
+          key: 'bottom1right',
+          frames: this.anims.generateFrameNumbers('pawnbottom1', { frames: [3] }),
+          frameRate: rate,
+          repeat: repeat
+        });
+
+        this.anims.create({
+          key: 'bottom2up',
+          frames: this.anims.generateFrameNumbers('pawnbottom2', { frames: [0] }),
+          frameRate: rate,
+          repeat: repeat
+        });
+        this.anims.create({
+          key: 'bottom2left',
+          frames: this.anims.generateFrameNumbers('pawnbottom2', { frames: [1] }),
           frameRate: rate,
           repeat: repeat
         });
@@ -129,14 +275,41 @@ const RaidScene = new Phaser.Class({
           repeat: repeat
         });
         this.anims.create({
+          key: 'bottom2right',
+          frames: this.anims.generateFrameNumbers('pawnbottom2', { frames: [3] }),
+          frameRate: rate,
+          repeat: repeat
+        });
+
+        this.anims.create({
+          key: 'legs1up',
+          frames: this.anims.generateFrameNumbers('pawnlegs1', { frames: [0] }),
+          frameRate: rate,
+          repeat: repeat
+        });
+        this.anims.create({
+          key: 'legs1left',
+          frames: this.anims.generateFrameNumbers('pawnlegs1', { frames: [1] }),
+          frameRate: rate,
+          repeat: repeat
+        });
+        this.anims.create({
           key: 'legs1down',
           frames: this.anims.generateFrameNumbers('pawnlegs1', { frames: [2] }),
           frameRate: rate,
           repeat: repeat
         });
+        this.anims.create({
+          key: 'legs1right',
+          frames: this.anims.generateFrameNumbers('pawnlegs1', { frames: [3] }),
+          frameRate: rate,
+          repeat: repeat
+        });
       }
+      //Actually defining the anims!!!
       defineAnims();
 
+      //Composing pawns from here.
       const composePawn = (container) => {
         const getRandomIndex = (array) => {
             return Math.floor(Math.random() * array.length);
