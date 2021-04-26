@@ -336,18 +336,18 @@ const RaidScene = new Phaser.Class({
         const torsoIndex = getRandomIndex(torsoKeys);
         const torsoKey = torsoKeys[torsoIndex];
         torsoSprite = this.add.sprite(0, -52, torsoKey);
-        torsoSprite._downAnimKey = torsoDownAnims[torsoIndex];
-        torsoSprite._leftAnimKey = torsoDownAnims[torsoIndex];
         torsoSprite._upAnimKey = torsoDownAnims[torsoIndex];
+        torsoSprite._leftAnimKey = torsoDownAnims[torsoIndex];
+        torsoSprite._downAnimKey = torsoDownAnims[torsoIndex];
         torsoSprite._rightAnimKey = torsoDownAnims[torsoIndex];
         container.add(torsoSprite)
 
         // get head
         const headKey = 'pawnhead1';
         headSprite = this.add.sprite(0, -76, headKey);
-        headSprite._downAnimKey = 'head1down';
-        headSprite._leftAnimKey = 'head1down';
         headSprite._upAnimKey = 'head1down';
+        headSprite._leftAnimKey = 'head1down';
+        headSprite._downAnimKey = 'head1down';
         headSprite._rightAnimKey = 'head1down';
         container.add(headSprite)
 
@@ -357,9 +357,9 @@ const RaidScene = new Phaser.Class({
         const hairIndex = getRandomIndex(hairKeys);
         const hairKey = hairKeys[hairIndex];
         var hairSprite = this.add.sprite(0, -72, hairKey);
-        hairSprite._downAnimKey = hairDownAnims[hairIndex];
-        hairSprite._leftAnimKey = hairDownAnims[hairIndex];
         hairSprite._upAnimKey = hairDownAnims[hairIndex];
+        hairSprite._leftAnimKey = hairDownAnims[hairIndex];
+        hairSprite._downAnimKey = hairDownAnims[hairIndex];
         hairSprite._rightAnimKey = hairDownAnims[hairIndex];
         container.add(hairSprite)
       }
