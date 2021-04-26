@@ -168,6 +168,8 @@
     "Steinus Swordbreaker",
     "Yuna Arbourlight",
     "Kojima's Demon",
+    "Laplace's Demon",
+    "Descartes' Demon"
   ];
   var playerName = "Raid' Simulator";
   var cardNames = [];
