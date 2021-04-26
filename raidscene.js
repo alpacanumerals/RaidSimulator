@@ -221,36 +221,48 @@ const RaidScene = new Phaser.Class({
       }, this);
       // pawn creation end
 
-      boss = this.physics.add.image(960, 200, 'boss')
+      boss = this.physics.add.image(raidZoneCentreX, 200, 'boss');
 
-      player = this.physics.add.image(960, 720, 'player');
-      playerTarget = this.physics.add.image(960, 720, 'playerTarget');
+      player = this.physics.add.image(raidZoneCentreX, 720, 'player');
+      playerTarget = this.physics.add.image(raidZoneCentreX, 720, 'playerTarget');
+
+      player.playerAttackInterval = 250;
+      player.nextPlayerAttackTime = globalClock + player.playerAttackInterval;
+      player.currentHealth = pawnMaxHp;
+      player.keio = false;
 
       this.input.on('pointerdown', function (pointer)
         {
-            playerTarget.setPosition(pointer.x, pointer.y);
-            this.physics.moveToObject(player, playerTarget, 240);
+          playerTarget.setPosition(pointer.x, pointer.y);
+          this.physics.moveToObject(player, playerTarget, 240);
         }, this
       );
       
       timeText = this.add.text(15, 510, 'Time: ', { fill: '#00ff00' });
       bossHealthText = this.add.text(15, 530, 'Boss Hp: ', { fill: '#00ff00' });
       mechanicText = this.add.text(15, 550, 'No Mechanic', { fill: '#00ff00' });
+      playerHealthText = this.add.text(15, 570, 'Player Hp: ', { fill: '#00ff00' });
+      playerDamageText = this.add.text(15, 590, 'Player Damage: ', { fill: '#00ff00' });
+      playerDamageDealt = 0;
 
       nextBossMoveTime = globalClock + bossMoveInterval;
       bossHealth = bossMaxHp;
 
       mechanicActive = false;
       nextMechanicTime = globalClock + bossMechanicInterval;
+
+      graphics = this.add.graphics({ lineStyle: { width: 2, color: 0x00ff00 }, fillStyle: { color: 0xff0000 }});
   },
 
   update: function(gameTime, delta) {
     globalClock = gameTime;
     timeText.setText('Time: ' + globalClock);
-    bossHealthText.setText(bossHealth + '/' + bossMaxHp);
+    bossHealthText.setText('Boss Hp: ' + bossHealth + '/' + bossMaxHp);
     if (bossHealth <= 0) {
       this.scene.start('IntroScene');
     }
+    playerHealthText.setText('Player Hp: ' + player.currentHealth + '/' + pawnMaxHp);
+    playerDamageText.setText('Player Damage: ' + playerDamageDealt)
 
     // resolve end-of-mechanic when it is time to fire
     if (mechanicActive && globalClock > mechanicFireTime) {
@@ -262,6 +274,10 @@ const RaidScene = new Phaser.Class({
           pawn.currentHealth -= currentMechanic.damage;
         }
       }, this);
+
+      if (currentMechanic.checkDamageZone(player, boss)) {
+        player.currentHealth -= currentMechanic.damage;
+      }
 
       pawns.getChildren().forEach(pawn => {
         pawn.respondingToMechanic = false
@@ -301,23 +317,15 @@ const RaidScene = new Phaser.Class({
     // locate the boss damage circle for later reference
     const bossDamageCircle = new Phaser.Geom.Circle(boss.x, boss.y, damageRange);
 
-    // pawns call this to handle their attack
-    const pawnAttack = (pawn) => {
-      if (!pawn.keio && gameTime > pawn.nextPawnAttackTime) {
-        if (bossDamageCircle.contains(pawn.x, pawn.y)) {
-          pawn.nextPawnAttackTime = gameTime + pawn.pawnAttackInterval
-          // sfx
-          bossHealth = bossHealth - pawnDamage;
-        }
-      }
-    }
+    graphics.clear();
+    graphics.strokeCircleShape(bossDamageCircle);
 
     // pawns in flocking mode use this to determine their movement
     const flockPawn = (pawn) => {
       var targetX = 0;
       var targetY = 0;
       var flockMaximum = 250;
-      const flockMinimum = 10;
+      const flockMinimum = 50;
       var peerCount = 0;
       var emergencyBreak = 0;
       const surveyPeers = (maxRadius) => {
@@ -371,13 +379,25 @@ const RaidScene = new Phaser.Class({
       checkStop(pawn, pawn.targetLocation);
     }
 
+    // check if a pawn is dead
     const checkDeath = (pawn) => {
       if (pawn.currentHealth <= 0) {
         pawn.currentHealth = 0;
         pawn.keio = true;
         // pawn falls over
         pawn.angle = 90;
-        // pawn.body.reset(pawn.x, pawn.y);
+        pawn.body.reset(pawn.x, pawn.y);
+      }
+    }
+
+    // pawns call this to handle their attack
+    const pawnAttack = (pawn) => {
+      if (!pawn.keio && gameTime > pawn.nextPawnAttackTime) {
+        if (bossDamageCircle.contains(pawn.x, pawn.y)) {
+          pawn.nextPawnAttackTime = gameTime + pawn.pawnAttackInterval
+          // sfx
+          bossHealth = bossHealth - pawnDamage;
+        }
       }
     }
 
@@ -386,6 +406,20 @@ const RaidScene = new Phaser.Class({
       pawnAttack(pawn);
       movePawn(pawn);
     }, this);
+
+    const playerAttack = (player) => {
+      if (!player.keio && gameTime > player.nextPlayerAttackTime) {
+        if (bossDamageCircle.contains(player.x, player.y)) {
+          player.nextPlayerAttackTime = gameTime + player.playerAttackInterval
+          // sfx
+          bossHealth = bossHealth - pawnDamage;
+          playerDamageDealt = playerDamageDealt + pawnDamage;
+        }
+      }
+    }
+
+    checkDeath(player);
+    playerAttack(player);
 
     checkStop(boss, bossTarget);
     checkStop(player, playerTarget);
