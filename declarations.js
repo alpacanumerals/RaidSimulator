@@ -59,3 +59,6 @@
   var globalClock;
 
   var graphics;
+
+  //pawn variables
+  var twentyFourPawns = [];
