@@ -178,19 +178,19 @@ const RaidScene = new Phaser.Class({
       }
 
       const addPawnEmitter = (container) => {
-      var emitter = particles.createEmitter({
-        x: container.x,
-        y: container.y,
-        speed: 50,
-        quantity: 0.01,
-        scale: { start: 0.1, end: 0.2 },
-      });
+        var emitter = particles.createEmitter({
+          x: container.x,
+          y: container.y,
+          speed: 50,
+          quantity: 0.01,
+          scale: { start: 0.1, end: 0.2 },
+        });
 
-      emitter.setSpeed(50);
-      emitter.setBlendMode(Phaser.BlendModes.ADD);
-      // emitter.pause();
+        emitter.setSpeed(50);
+        emitter.setBlendMode(Phaser.BlendModes.ADD);
+        // emitter.pause();
 
-      container.add(emitter);
+        container.add(emitter);
       }
 
       pawns = this.physics.add.group();
