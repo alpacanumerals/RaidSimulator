@@ -202,6 +202,8 @@
       this.load.spritesheet('pawnbottom3', 'assets/pawnlegs1.png', { frameWidth: 48, frameHeight: 36 });
 
       this.load.image("bossroom", "assets/bossroom1.png")
+
+      this.load.audio("se-aoe", "assets/se-attack3-long.wav");
     },
 
     create: function (gameTime) {
@@ -425,6 +427,7 @@
       // resolve end-of-mechanic when it is time to fire
       if (mechanicActive && globalClock > mechanicFireTime) {
         currentMechanic.damageAnimation(this, boss);
+        this.sound.play("se-aoe");
         // check for damage
         pawns.getChildren().forEach(pawn => {
           if (currentMechanic.checkDamageZone(pawn, boss)) {
