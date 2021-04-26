@@ -170,3 +170,26 @@
   ];
   var playerName = "Raid' Simulator";
   var cardNames = [];
+
+  var attacksA = [
+    "Dancing Mad",
+    "Douncing Mad",
+    "Prancing Mad",
+    "Pouncing Mad",
+    "Gyring Mad",
+    "Gymbling Mad"
+  ]
+  var attacksB = [
+    "Whirling Whack",
+    "Flamboyant Flail",
+    "Reckless Roll",
+    "Exuberant Excess",
+    "Thundering Thump",
+    "Heedless Headbutt"
+  ] 
+  var attacksC = [
+    "Cheek Star Cannon",
+    "Eye Beams",
+    "Pom Blaster",
+    "Eary Slash"
+  ]
