@@ -412,7 +412,9 @@ const RaidScene = new Phaser.Class({
 
       player.playerAttackInterval = 250;
       player.nextPlayerAttackTime = globalClock + player.playerAttackInterval;
-      player.currentHealth = pawnMaxHp;
+      player.maxHealth = pawnDpsMaxHp;
+      player.currentHealth = player.maxHealth;
+      player.damageRate = pawnDpsDamage;
       player.keio = false;
 
       this.input.on('pointerdown', function (pointer)
@@ -437,6 +439,7 @@ const RaidScene = new Phaser.Class({
 
       graphics = this.add.graphics({ lineStyle: { width: 2, color: 0x00ff00 }, fillStyle: { color: 0xff0000 }});
 
+      party = this.add.group();
       pawns.getChildren().forEach(pawn => {
         party.add(pawn);
       }, this);
@@ -450,7 +453,7 @@ const RaidScene = new Phaser.Class({
     if (bossHealth <= 0) {
       this.scene.start('IntroScene');
     }
-    playerHealthText.setText('Player Hp: ' + player.currentHealth + '/' + pawnMaxHp);
+    playerHealthText.setText('Player Hp: ' + player.currentHealth + '/' + player.maxHealth);
     playerDamageText.setText('Player Damage: ' + playerDamageDealt)
 
     // resolve end-of-mechanic when it is time to fire
@@ -597,7 +600,7 @@ const RaidScene = new Phaser.Class({
         if (bossDamageCircle.contains(pawn.x, pawn.y)) {
           pawn.nextPawnAttackTime = gameTime + pawn.pawnAttackInterval
           // sfx
-          bossHealth = bossHealth - pawnDamage;
+          bossHealth = bossHealth - pawn.damageRate;
         }
       }
     }
@@ -615,8 +618,8 @@ const RaidScene = new Phaser.Class({
         if (bossDamageCircle.contains(player.x, player.y)) {
           player.nextPlayerAttackTime = gameTime + player.playerAttackInterval
           // sfx
-          bossHealth = bossHealth - pawnDamage;
-          playerDamageDealt = playerDamageDealt + pawnDamage;
+          bossHealth = bossHealth - player.damageRate;
+          playerDamageDealt = playerDamageDealt + player.damageRate;
         }
       }
     }
