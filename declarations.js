@@ -13,8 +13,21 @@
   const bossMoveInterval = 5000;
   const bossMechanicInterval = 10000;
   const bossMaxHp = 1000000;
-  const pawnDamage = 200;
-  const pawnMaxHp = 1000;
+
+  const tankRole = 'tank';
+  const dpsRole = 'DPS';
+  const healerRole = 'healer'
+
+  const pawnTankDamage = 100;
+  const pawnTankMaxHp = 2000;
+
+  const pawnDpsDamage = 200;
+  const pawnDpsMaxHp = 1000;
+
+  const pawnHealDamage = 100;
+  const pawnHealMaxHp = 1000;
+  const pawnHealPower = 300;
+  const pawnRezTimer = 10000;
 
   const pi = Math.PI;
 

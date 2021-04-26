@@ -187,29 +187,27 @@ const RaidScene = new Phaser.Class({
         container.add(hairSprite)
       }
 
-      const addPawnEmitter = (container) => {
-        var emitter = particles.createEmitter({
-          x: container.x,
-          y: container.y,
-          speed: 50,
-          quantity: 0.01,
-          scale: { start: 0.1, end: 0.2 },
-        });
-
-        emitter.setSpeed(50);
-        emitter.setBlendMode(Phaser.BlendModes.ADD);
-        // emitter.pause();
-
-        container.add(emitter);
-      }
-
       pawns = this.physics.add.group();
+
+      var j = 0;
+      const setPawnRole = (pawn) => {
+        roleDistribution = [3, 6, 15];
+        j++;
+        if (j < roleDistribution[0]) {
+          pawn._role = tankRole;
+        } else if (j < roleDistribution[0] + roleDistribution[1]) {
+          pawn._role = healerRole;
+        } else {
+          pawn._role = dpsRole;
+        }
+      }
 
       var i
       for (i=0; i<24; i++) {
         const pawn = this.add.container();
         this.physics.world.enable(pawn);
         composePawn(pawn);
+        setPawnRole(pawn);
         // addPawnEmitter(pawn);
         pawns.add(pawn);
       }
@@ -420,6 +418,7 @@ const RaidScene = new Phaser.Class({
       }
     }
 
+    // deal with the logic for each pawn
     pawns.getChildren().forEach(pawn => {
       checkDeath(pawn);
       pawnAttack(pawn);
