@@ -6,12 +6,12 @@ const circleAoe = {
   damage: 600,
   damageAnimation: (_this, boss) => {
     var damageCircle = _this.add.circle(boss.x, boss.y, circleAoeRadius, 0x6666ff);
-    _this.tweens.add({
-    targets: damageCircle,
-    alpha: 0,
-    yoyo: false,
-    repeat: 0,
-    ease: 'Sine.easeInOut'
+      _this.tweens.add({
+      targets: damageCircle,
+      alpha: 0,
+      yoyo: false,
+      repeat: 0,
+      ease: 'Sine.easeInOut'
     })
   },
   checkDamageZone: (pawn, boss) => {
@@ -47,4 +47,55 @@ const circleAoe = {
   },
 };
 
-const crossAoe = {}
+const crossWidth = 300;
+
+const crossAoe = {
+  name: 'not sure we actually need this',
+  chargeTime: 5000,
+  damage: 600,
+  damageAnimation: (_this, boss) => {
+    const margin = crossWidth/2;
+    // var damageRect1 = _this.add.rectangle(leftPlayBound, boss.y-margin, rightPlayBound, boss.y+margin, 0x6666ff);
+    // var damageRect2 = _this.add.rectangle(boss.x-margin, topPlayBound, boss.x+margin, bottomPlayBound, 0x6666ff);
+    var damageRect1 = _this.add.rectangle(raidZoneCentreX, boss.y, rightPlayBound-leftPlayBound, crossWidth, 0x6666ff);
+    var damageRect2 = _this.add.rectangle(boss.x, raidZoneCentreY, crossWidth, bottomPlayBound-topPlayBound, 0x6666ff);
+    _this.tweens.add({
+      targets: damageRect1,
+      alpha: 0,
+      yoyo: false,
+      repeat: 0,
+      ease: 'Sine.easeInOut'
+    });
+    _this.tweens.add({
+      targets: damageRect2,
+      alpha: 0,
+      yoyo: false,
+      repeat: 0,
+      ease: 'Sine.easeInOut'
+      })
+  },
+  checkDamageZone: (pawn, boss) => {
+    const margin = crossWidth/2;
+    if (pawn.x > boss.x - margin && pawn.x < boss.x + margin) {
+      return true;
+    }
+    if (pawn.y > boss.y - margin && pawn.y < boss.y + margin) {
+      return true;
+    }
+    return false;
+  },
+  getSafeLocation: (pawn, boss) => {
+    // pick random X not in vertical beam
+    // pick random Y not in horizontal beam
+    const margin = crossWidth/2;
+    var safeX = boss.x;
+    var safeY = boss.y;
+    while (safeX > boss.x - margin && safeX < boss.x + margin) {
+      safeX = Phaser.Math.RND.between(leftPlayBound, rightPlayBound);
+    }
+    while (safeY > boss.y - margin && safeY < boss.y + margin) {
+      safeY = Phaser.Math.RND.between(topPlayBound, bottomPlayBound);
+    }
+    return new Phaser.Math.Vector2(safeX, safeY);
+  }
+}

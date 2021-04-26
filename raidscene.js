@@ -654,7 +654,7 @@ const RaidScene = new Phaser.Class({
     // start a mechanic if it is time to charge one
     if (!mechanicActive && globalClock > nextMechanicTime) {
       mechanicActive = true;
-      currentMechanic = circleAoe; // this will later need to be from somewhere
+      currentMechanic = crossAoe; // this will later need to be from somewhere
       mechanicFireTime = globalClock + currentMechanic.chargeTime;
       nextBossMoveTime = mechanicFireTime + bossMoveInterval;
       mechanicText.setText('Mechanic Active!')

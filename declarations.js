@@ -5,6 +5,7 @@
   const bottomPlayBound = 960;
 
   const raidZoneCentreX = (leftPlayBound + rightPlayBound)/2
+  const raidZoneCentreY = (topPlayBound + bottomPlayBound)/2
 
   const raidZone = new Phaser.Geom.Rectangle(leftPlayBound, topPlayBound, rightPlayBound, bottomPlayBound);
   const startZone = new Phaser.Geom.Circle(raidZoneCentreX, 720, 100);
