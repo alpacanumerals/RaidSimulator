@@ -619,18 +619,21 @@ const RaidScene = new Phaser.Class({
     }
 
     const facePawn = (pawn) => {
-      if (pawn.body.speed = 0 || (pawn.body.angle > 0.75*pi && pawn.body.angle < 1.25*pi)) {
+      if (pawn.body.speed != 0) {
         const components = pawn.getAll('_downAnimKey');
         components.forEach(component => component.anims.play(component._downAnimKey))
-      } else if (pawn.body.angle > 1.25*pi && pawn.body.angle < 1.75*pi) {
+      } else if (pawn.body.angle < -0.75*pi || pawn.body.angle > 0.75*pi) {
         const components = pawn.getAll('_leftAnimKey');
         components.forEach(component => component.anims.play(component._leftAnimKey))
-      } else if (pawn.body.angle > 1.75*pi || pawn.body.angle < 0.25*pi) {
-        const components = pawn.getAll('_leftAnimKey');
+      } else if (pawn.body.angle > -0.75*pi && pawn.body.angle < -0.25*pi) {
+        const components = pawn.getAll('_upAnimKey');
         components.forEach(component => component.anims.play(component._upAnimKey))
-      } else if (pawn.body.angle > 0.25*pi && pawn.body.angle < 0.75*pi) {
-        const components = pawn.getAll('_leftAnimKey');
+      } else if (pawn.body.angle > -0.25*pi || pawn.body.angle < 0.25*pi) {
+        const components = pawn.getAll('_rightAnimKey');
         components.forEach(component => component.anims.play(component._rightAnimKey))
+      } else if (pawn.body.angle > 0.25*pi && pawn.body.angle < 0.75*pi) {
+        const components = pawn.getAll('_downAnimKey');
+        components.forEach(component => component.anims.play(component._downAnimKey))
       }
     }
 
