@@ -315,6 +315,7 @@ const RaidScene = new Phaser.Class({
         const getRandomIndex = (array) => {
             return Math.floor(Math.random() * array.length);
         }
+
         const skinTints = [0xffddcc, 0xffe5e7, 0xffdbb7, 0xffc4bf, 0x5b473a];
         const clothingTints = [
           //Blues
@@ -384,7 +385,6 @@ const RaidScene = new Phaser.Class({
         torsoSprite._leftAnimKey = torsoLeftAnims[torsoIndex];
         torsoSprite._downAnimKey = torsoDownAnims[torsoIndex];
         torsoSprite._rightAnimKey = torsoRightAnims[torsoIndex];
-        
 
         // get legs
         const legKeys = ['pawnbottom1', 'pawnbottom2', 'pawnlegs1'];
@@ -401,7 +401,7 @@ const RaidScene = new Phaser.Class({
         legSprite._rightAnimKey = legRightAnims[legIndex];
 
         container.add(hairSprite)
-        container.add(legSprite)      
+        container.add(legSprite)
         container.add(torsoSprite)
         container.add(headSprite)
       }
@@ -411,39 +411,43 @@ const RaidScene = new Phaser.Class({
       var j = 0;
       const setPawnRole = (pawn) => {
         roleDistribution = [3, 6, 15];
-        j++;
         if (j < roleDistribution[0]) {
           pawn._role = tankRole;
           pawn.maxHealth = pawnTankMaxHp;
           pawn.damageRate = pawnTankDamage;
+          pawn.healPower = 0;
         } else if (j < roleDistribution[0] + roleDistribution[1]) {
           pawn._role = healerRole;
           pawn.maxHealth = pawnHealMaxHp;
           pawn.damageRate = pawnHealDamage;
+          pawn.healPower = pawnHealPower;
         } else {
           pawn._role = dpsRole;
           pawn.maxHealth = pawnDpsMaxHp;
           pawn.damageRate = pawnDpsDamage;
+          pawn.healPower = 0;
         }
+        j++;
       }
 
       var i;
-      for (i=0; i<24; i++) {
+      for (i=0; i<23; i++) {
         const pawn = this.add.container();
         this.physics.world.enable(pawn);
         composePawn(pawn);
         setPawnRole(pawn);
         pawn.pawnAttackInterval = Phaser.Math.RND.between(250, 400)
         pawn.pawnMoveInterval = Phaser.Math.RND.between(100, 400)
+        pawn.pawnHealInterval = pawnHealTimer;
         pawns.add(pawn);
       }
 
       Phaser.Actions.RandomCircle(pawns.getChildren(), startZone);
       pawns.getChildren().forEach(pawn => {
-        setPawnRole(pawn);
         pawn.targetLocation = new Phaser.Geom.Point(pawn.x, pawn.y);
         pawn.nextPawnAttackTime = globalClock + pawn.pawnAttackInterval
         pawn.nextPawnMoveTime = globalClock + pawn.pawnMoveInterval;
+        pawn.nextPawnHealTime = globalClock + pawn.pawnHealInterval;
         pawn.respondingToMechanic = false;
         pawn.currentHealth = pawn.maxHealth;
         pawn.keio = false;
@@ -462,6 +466,7 @@ const RaidScene = new Phaser.Class({
       player.currentHealth = player.maxHealth;
       player.damageRate = pawnDpsDamage;
       player.keio = false;
+      player._role = dpsRole;
 
       this.input.on('pointerdown', function (pointer)
         {
@@ -576,12 +581,12 @@ const RaidScene = new Phaser.Class({
         }
         });
       }
-      while (peerCount == 0 && emergencyBreak < 3) {
+      while (peerCount === 0 && emergencyBreak < 3) {
         surveyPeers(flockMaximum);
         flockMaximum = flockMaximum * 2;
         emergencyBreak++;
       }
-      if (peerCount == 0) {
+      if (peerCount === 0) {
         peerCount = 1;
       };
       const target = new Phaser.Math.Vector2(targetX/peerCount, targetY/peerCount);
@@ -640,13 +645,76 @@ const RaidScene = new Phaser.Class({
       }
     }
 
+    const revive = (target) => {
+      target.angle = 0;
+      target.keio = false;
+      target.currentHealth = target.maxHealth / 2;
+      if (!!target.pawnNextAttackTime) {
+        target.pawnNextAttackTime = globalClock + target.pawnAttackInterval
+      }
+      if (!!target.nextPawnMoveTime) {
+        target.nextPawnMoveTime = globalClock + target.pawnMoveInterval;
+      }
+    }
+
+    const heal = (healer, target) => {
+      target.currentHealth = target.currentHealth + healer.healPower;
+      if (target.currentHealth > target.maxHealth) {
+        target.currentHealth = target.maxHealth;
+      }
+    }
+
     // pawns call this to handle their attack
     const pawnAttack = (pawn) => {
-      if (!pawn.keio && gameTime > pawn.nextPawnAttackTime) {
-        if (bossDamageCircle.contains(pawn.x, pawn.y)) {
-          pawn.nextPawnAttackTime = gameTime + pawn.pawnAttackInterval
-          // sfx
-          bossHealth = bossHealth - pawn.damageRate;
+      if (!pawn.keio) {
+        if (gameTime > pawn.nextPawnAttackTime) {
+          if (bossDamageCircle.contains(pawn.x, pawn.y)) {
+            pawn.nextPawnAttackTime = gameTime + pawn.pawnAttackInterval
+            // sfx
+            bossHealth = bossHealth - pawn.damageRate;
+          }
+        }
+        if (pawn._role === healerRole && gameTime > pawn.nextPawnHealTime) {
+          let resTarget = null;
+          let healTarget = null;
+          const partyMembers = party.getChildren();
+          // look for tank or healer that needs res
+          const priority1 = partyMembers.filter(member => 
+            member._role != dpsRole && member.keio
+          );
+          if (priority1.length > 0) {
+            resTarget = priority1[0];
+          }
+          // look for tank or healer that needs heals
+          const priority2 = partyMembers.filter(member => 
+            member._role != dpsRole && member.currentHealth < member.maxHealth
+          );
+          if (priority2.length > 0) {
+            healTarget = priority2[0];
+          }
+          // look for dps that needs res
+          const priority3 = partyMembers.filter(member => 
+            member._role === dpsRole && member.keio
+          );
+          if (priority3.length > 0) {
+            resTarget = priority3[0];
+          }
+          // look for dps that needs heals
+          const priority4 = partyMembers.filter(member => 
+            member._role === dpsRole && member.currentHealth < member.maxHealth
+          );
+          if (priority4.length > 0) {
+            healTarget = priority4[0];
+          }
+          if (!!resTarget) {
+            // gfx here
+            revive(resTarget);
+            pawn.nextPawnHealTime = globalClock + pawn.pawnHealInterval;
+          } else if (!!healTarget) {
+            // gfx here
+            heal(pawn, healTarget);
+            pawn.nextPawnHealTime = globalClock + pawn.pawnHealInterval;
+          }
         }
       }
     }
