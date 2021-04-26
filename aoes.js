@@ -14,7 +14,7 @@ circleAoeRadius = 500;
         })
     },
     checkDamageZone: (pawn, boss) => {
-        return Phaser.Math.Distance.Between(pawn.x, pawn.y, boss.x, boss.y) < circleAoeRadius;
+        return Phaser.Math.Distance.Between(pawn.x, pawn.y, boss.x, boss.y) < circleAoeRadius+500;
     },
     getSafeLocation: (pawn, boss) => {
         // pretend circle is rectangle for tractability

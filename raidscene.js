@@ -861,6 +861,7 @@ const RaidScene = new Phaser.Class({
       pawnAttack(pawn);
       movePawn(pawn);
       facePawn(pawn);
+      pawn.healthBar.drawHealthBar(pawn.currentHealth, pawn.maxHealth);
     }, this);
 
     const playerAttack = (player) => {
@@ -878,6 +879,7 @@ const RaidScene = new Phaser.Class({
     checkDeath(player);
     playerAttack(player);
     facePawn(player);
+    player.healthBar.drawHealthBar(player.currentHealth, player.maxHealth);
 
     checkStop(boss, bossTarget);
     checkStop(player, playerTarget);
