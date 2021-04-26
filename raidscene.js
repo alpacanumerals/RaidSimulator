@@ -515,7 +515,7 @@ const RaidScene = new Phaser.Class({
         }, this
       );
       
-      mechanicText = this.add.text(15, 550, 'No Mechanic', { fill: '#00ff00' });
+      mechanicText = this.add.text(723, 50, '', pawnCardStyle);
       playerDamageText = this.add.text(15, 590, 'Player Damage: ', { fill: '#00ff00' });
       playerDamageDealt = 0;
 
@@ -533,8 +533,8 @@ const RaidScene = new Phaser.Class({
       }, this);
       party.add(player);
 
-      this.add.text(723, 33, bossTitle[0], pawnCardStyle);
-      createHealthBar(boss, 720, 50, 540, 20);
+      this.add.text(723, 15, bossTitle[0], pawnCardStyle);
+      createHealthBar(boss, 720, 32, 540, 20);
 
       //MMO UI generation
       P00 = this.add.text(55, 17, cardNames[0], pawnCardStyle);
