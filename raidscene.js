@@ -286,12 +286,13 @@ const RaidScene = new Phaser.Class({
       //Actually defining the animations.
       defineAnims();
 
+      // utilty function, should be elsewhere tbh
+      const getRandomIndex = (array) => {
+        return Math.floor(Math.random() * array.length);
+      }
+
       //Composing pawns from here.
       const composePawn = (container) => {
-        const getRandomIndex = (array) => {
-            return Math.floor(Math.random() * array.length);
-        }
-
         const skinTints = [0xffddcc, 0xffe5e7, 0xffdbb7, 0xffc4bf, 0x5b473a];
         const clothingTints = [
           //Blues
@@ -318,7 +319,6 @@ const RaidScene = new Phaser.Class({
         // Pick a skin colour here since it'll be used for both head and legs if they exist.
         const skinIndex = getRandomIndex(skinTints);
         
-
         // get head
         const headKeys = ['pawnhead1'];
         const headUpAnims = ['head1up'];
@@ -386,16 +386,18 @@ const RaidScene = new Phaser.Class({
         legSprite._downAnimKey = legDownAnims[legIndex];
         legSprite._rightAnimKey = legRightAnims[legIndex];
 
-        //get a name (temporary garbage code)
-        const nameIndex = getRandomIndex(twentyThreeNames);
-        const pawnName = twentyThreeNames[nameIndex];
-        var nameTag = this.add.text(-25, -110, pawnName, nameTagStyle);
-        cardNames.push(pawnName);
-
         container.add(legSprite);
         container.add(torsoSprite);
         container.add(headSprite);
         container.add(hairSprite);
+      }
+
+      const addNameTag = (container, nameOverride) => {
+        //get a name (temporary garbage code)
+        const nameIndex = getRandomIndex(twentyThreeNames);
+        const pawnName = !!nameOverride ? nameOverride : twentyThreeNames[nameIndex];
+        var nameTag = this.add.text(-25, -110, pawnName, nameTagStyle);
+        cardNames.push(pawnName);
         container.add(nameTag);
       }
 
@@ -428,6 +430,7 @@ const RaidScene = new Phaser.Class({
         const pawn = this.add.container();
         this.physics.world.enable(pawn);
         composePawn(pawn);
+        addNameTag(pawn);
         setPawnRole(pawn);
         pawn.pawnAttackInterval = Phaser.Math.RND.between(500, 800)
         pawn.pawnMoveInterval = Phaser.Math.RND.between(100, 400)
@@ -477,7 +480,12 @@ const RaidScene = new Phaser.Class({
 
       boss = this.physics.add.image(raidZoneCentreX, 200, 'boss');
 
-      player = this.physics.add.image(raidZoneCentreX, 720, 'player');
+      // player = this.physics.add.image(raidZoneCentreX, 720, 'player');
+      player = this.add.container();
+      this.physics.world.enable(player);
+      composePawn(player);
+      addNameTag(player, playerName);
+      player.body.reset(raidZoneCentreX, 720);
       playerTarget = this.physics.add.image(raidZoneCentreX, 720, 'playerTarget');
 
       player.playerAttackInterval = 500;
@@ -696,7 +704,7 @@ const RaidScene = new Phaser.Class({
     }
 
     const facePawn = (pawn) => {
-      if (pawn.body.speed != 0) {
+      if (pawn.body.speed == 0) {
         const components = pawn.getAll('_downAnimKey');
         components.forEach(component => component.anims.play(component._downAnimKey))
       } else if (pawn.body.angle < -0.75*pi || pawn.body.angle > 0.75*pi) {
@@ -840,6 +848,7 @@ const RaidScene = new Phaser.Class({
 
     checkDeath(player);
     playerAttack(player);
+    facePawn(player);
 
     checkStop(boss, bossTarget);
     checkStop(player, playerTarget);
