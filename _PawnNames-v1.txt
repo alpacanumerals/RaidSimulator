@@ -1,18 +1,7 @@
 //Enough here to start off.
 //Preformed 2-Barrel Memey Names
 [
-"Jenova's Witness"
-"Viewing Cutscene"
-"Floor Tank"
-"Additional Pylons"
-"Wind-up Alpacalypse"
-"Wind-up Ruruie"
-"Statistical Mechanics"
-"Wistful Alpaca"
-"Brave Cod"
-"Ron Tsumo"
-"Getty Images"
-"Partly True"
+""
 ]
 
 //Meme-y Forenames
