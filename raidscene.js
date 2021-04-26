@@ -27,7 +27,7 @@ const RaidScene = new Phaser.Class({
 
       this.load.spritesheet('pawnbottom1', 'assets/pawnbottom1.png', { frameWidth: 48, frameHeight: 36 });
       this.load.spritesheet('pawnbottom2', 'assets/pawnbottom2.png', { frameWidth: 48, frameHeight: 36 });
-      this.load.spritesheet('pawnbottom3', 'assets/pawnlegs1.png', { frameWidth: 48, frameHeight: 36 });
+      this.load.spritesheet('pawnlegs1', 'assets/pawnlegs1.png', { frameWidth: 48, frameHeight: 36 });
 
       this.load.image("bossroom", "assets/bossroom1.png")
 
@@ -76,77 +76,81 @@ const RaidScene = new Phaser.Class({
       // pawn creation start
       const defineAnims = () => {
         const rate = 1;
-        const repeat = 1;
+        const repeat = 0;
         this.anims.create({
           key: 'hair1down',
-          frames: this.anims.generateFrameNumbers('pawnhair1', { start: 0, end: 0 }),
+          frames: this.anims.generateFrameNumbers('pawnhair1', { frames: [2] }),
           frameRate: rate,
           repeat: repeat
         });
         this.anims.create({
           key: 'hair2down',
-          frames: this.anims.generateFrameNumbers('pawnhair2', { start: 0, end: 0 }),
+          frames: this.anims.generateFrameNumbers('pawnhair2', { frames: [2] }),
           frameRate: rate,
           repeat: repeat
         });
         this.anims.create({
           key: 'hair3down',
-          frames: this.anims.generateFrameNumbers('pawnhair3', { start: 0, end: 0 }),
+          frames: this.anims.generateFrameNumbers('pawnhair3', { frames: [2] }),
           frameRate: rate,
           repeat: repeat
         });
 
         this.anims.create({
           key: 'head1down',
-          frames: this.anims.generateFrameNumbers('pawnhead1', { start: 0, end: 0 }),
+          frames: this.anims.generateFrameNumbers('pawnhead1', { frames: [2] }),
           frameRate: rate,
           repeat: repeat
         });
 
         this.anims.create({
           key: 'body1down',
-          frames: this.anims.generateFrameNumbers('pawnbody1', { start: 0, end: 0 }),
+          frames: this.anims.generateFrameNumbers('pawnbody1', { frames: [2] }),
           frameRate: rate,
           repeat: repeat
         });
         this.anims.create({
           key: 'body2down',
-          frames: this.anims.generateFrameNumbers('pawnbody2', { start: 0, end: 0 }),
+          frames: this.anims.generateFrameNumbers('pawnbody2', { frames: [2] }),
           frameRate: rate,
           repeat: repeat
         });
 
         this.anims.create({
           key: 'bottom1down',
-          frames: this.anims.generateFrameNumbers('pawnbottom1', { start: 0, end: 0 }),
+          frames: this.anims.generateFrameNumbers('pawnbottom1', { frames: [2] }),
           frameRate: rate,
           repeat: repeat
         });
         this.anims.create({
           key: 'bottom2down',
-          frames: this.anims.generateFrameNumbers('pawnbottom2', { start: 0, end: 0 }),
+          frames: this.anims.generateFrameNumbers('pawnbottom2', { frames: [2] }),
           frameRate: rate,
           repeat: repeat
         });
         this.anims.create({
-          key: 'bottom3down',
-          frames: this.anims.generateFrameNumbers('pawnlegs1', { start: 0, end: 0 }),
+          key: 'legs1down',
+          frames: this.anims.generateFrameNumbers('pawnlegs1', { frames: [2] }),
           frameRate: rate,
           repeat: repeat
         });
       }
+      defineAnims();
 
       const composePawn = (container) => {
         const getRandomIndex = (array) => {
             return Math.floor(Math.random() * array.length);
         }
         // get legs
-        const legKeys = ['pawnbottom1', 'pawnbottom2', 'pawnbottom3'];
-        const legDownAnims = ['bottom1down', 'bottom2down', 'bottom3down'];
+        const legKeys = ['pawnbottom1', 'pawnbottom2', 'pawnlegs1'];
+        const legDownAnims = ['bottom1down', 'bottom2down', 'legs1down'];
         const legIndex = getRandomIndex(legKeys);
         const legKey = legKeys[legIndex];
         var legSprite = this.add.sprite(0, -18, legKey);
         legSprite._downAnimKey = legDownAnims[legIndex];
+        legSprite._leftAnimKey = legDownAnims[legIndex];
+        legSprite._upAnimKey = legDownAnims[legIndex];
+        legSprite._rightAnimKey = legDownAnims[legIndex];
         container.add(legSprite)
 
         // get torso
@@ -156,12 +160,18 @@ const RaidScene = new Phaser.Class({
         const torsoKey = torsoKeys[torsoIndex];
         torsoSprite = this.add.sprite(0, -52, torsoKey);
         torsoSprite._downAnimKey = torsoDownAnims[torsoIndex];
+        torsoSprite._leftAnimKey = torsoDownAnims[torsoIndex];
+        torsoSprite._upAnimKey = torsoDownAnims[torsoIndex];
+        torsoSprite._rightAnimKey = torsoDownAnims[torsoIndex];
         container.add(torsoSprite)
 
         // get head
         const headKey = 'pawnhead1';
         headSprite = this.add.sprite(0, -76, headKey);
         headSprite._downAnimKey = 'head1down';
+        headSprite._leftAnimKey = 'head1down';
+        headSprite._upAnimKey = 'head1down';
+        headSprite._rightAnimKey = 'head1down';
         container.add(headSprite)
 
         // get hair
@@ -171,6 +181,9 @@ const RaidScene = new Phaser.Class({
         const hairKey = hairKeys[hairIndex];
         var hairSprite = this.add.sprite(0, -72, hairKey);
         hairSprite._downAnimKey = hairDownAnims[hairIndex];
+        hairSprite._leftAnimKey = hairDownAnims[hairIndex];
+        hairSprite._upAnimKey = hairDownAnims[hairIndex];
+        hairSprite._rightAnimKey = hairDownAnims[hairIndex];
         container.add(hairSprite)
       }
 
@@ -200,12 +213,6 @@ const RaidScene = new Phaser.Class({
         // addPawnEmitter(pawn);
         pawns.add(pawn);
       }
-      this.anims.create({
-        key: 'down',
-        frames: this.anims.generateFrameNumbers('dude', { start: 0, end: 0 }),
-        frameRate: 0,
-        repeat: 0
-      });
 
       Phaser.Actions.RandomCircle(pawns.getChildren(), startZone);
       pawns.getChildren().forEach(pawn => {
@@ -254,7 +261,7 @@ const RaidScene = new Phaser.Class({
       graphics = this.add.graphics({ lineStyle: { width: 2, color: 0x00ff00 }, fillStyle: { color: 0xff0000 }});
   },
 
-  update: function(gameTime, delta) {
+  update: function(gameTime) {
     globalClock = gameTime;
     timeText.setText('Time: ' + globalClock);
     bossHealthText.setText('Boss Hp: ' + bossHealth + '/' + bossMaxHp);
@@ -352,10 +359,6 @@ const RaidScene = new Phaser.Class({
     }
 
     const movePawn = (pawn) => {
-      if (true) { // direction checker later
-        // const components = pawn.getAll('_downAnimKey');
-        // components.forEach(component => component.anims.play(component._downAnimKey))
-      }
       if (!pawn.keio && gameTime > pawn.nextPawnMoveTime) {
         pawn.nextPawnMoveTime = globalClock + pawn.pawnMoveInterval;
         if (mechanicActive) {
@@ -377,6 +380,22 @@ const RaidScene = new Phaser.Class({
         }
       }
       checkStop(pawn, pawn.targetLocation);
+    }
+
+    const facePawn = (pawn) => {
+      if (pawn.body.speed = 0 || (pawn.body.angle > 0.75*pi && pawn.body.angle < 1.25*pi)) {
+        const components = pawn.getAll('_downAnimKey');
+        components.forEach(component => component.anims.play(component._downAnimKey))
+      } else if (pawn.body.angle > 1.25*pi && pawn.body.angle < 1.75*pi) {
+        const components = pawn.getAll('_leftAnimKey');
+        components.forEach(component => component.anims.play(component._leftAnimKey))
+      } else if (pawn.body.angle > 1.75*pi || pawn.body.angle < 0.25*pi) {
+        const components = pawn.getAll('_leftAnimKey');
+        components.forEach(component => component.anims.play(component._upAnimKey))
+      } else if (pawn.body.angle > 0.25*pi && pawn.body.angle < 0.75*pi) {
+        const components = pawn.getAll('_leftAnimKey');
+        components.forEach(component => component.anims.play(component._rightAnimKey))
+      }
     }
 
     // check if a pawn is dead
@@ -405,6 +424,7 @@ const RaidScene = new Phaser.Class({
       checkDeath(pawn);
       pawnAttack(pawn);
       movePawn(pawn);
+      facePawn(pawn);
     }, this);
 
     const playerAttack = (player) => {

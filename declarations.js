@@ -16,6 +16,8 @@
   const pawnDamage = 200;
   const pawnMaxHp = 1000;
 
+  const pi = Math.PI;
+
   // variables to hold objects that need to persist outside of create/update function calls
   var player;
   var boss;
