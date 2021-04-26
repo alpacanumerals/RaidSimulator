@@ -23,6 +23,10 @@ const IntroScene = new Phaser.Class({
     //Testing text loading from another file.
     this.add.image(960, 540, "title");
     click = this.sound.add("click");
+    const hintStyle = {fontFamily: "Trebuchet MS", fontSize: "16px", fill: '#009900' }
+    this.add.text(720, 850, "This is an Early Version(tm) but we're happy we got something out.", hintStyle);
+    this.add.text(850, 880, "Click on the platform to move.", hintStyle);
+    this.add.text(821, 910, "Be near the boss to contribute damage.", hintStyle);
 
     var fullscreenButton = this.add.image(400, 600, "fullscreen1");
     fullscreenButton.setInteractive();
