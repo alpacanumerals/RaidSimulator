@@ -443,6 +443,33 @@ const RaidScene = new Phaser.Class({
       }, this);
       // pawn creation end
 
+      const createHealthBar = (object, x, y, length, width) => {
+        const bar = this.add.graphics();
+
+        bar.drawHealthBar = (currentHealth, maxHealth) => {
+          bar.clear();
+
+          bar.fillStyle(0x000000);
+          bar.fillRect(x, y, length, width);
+
+          bar.fillStyle(0xffffff);
+          bar.fillRect(x + 2, y + 2, length-4, width-4);
+
+          const proportion = currentHealth/maxHealth;
+          if (proportion < 0.3) {
+            bar.fillStyle(0xff0000);
+          } else {
+            bar.fillStyle(0x00ff00)
+          }
+
+          var filler = Math.floor(proportion * length-4);
+
+          bar.fillRect(x + 2, y + 2, filler, width-4);
+        }
+
+        object.healthBar = bar;
+      }
+
       boss = this.physics.add.image(raidZoneCentreX, 200, 'boss');
 
       player = this.physics.add.image(raidZoneCentreX, 720, 'player');
@@ -484,6 +511,8 @@ const RaidScene = new Phaser.Class({
       }, this);
       party.add(player);
 
+      createHealthBar(boss, 540, 100, 540, 20);
+
 
       P01 = this.add.text(55, 15, cardNames[0], pawnCardStyle);
       P02 = this.add.text(55, 55, cardNames[1], pawnCardStyle);
@@ -516,6 +545,7 @@ const RaidScene = new Phaser.Class({
     globalClock = gameTime;
     timeText.setText('Time: ' + globalClock);
     bossHealthText.setText('Boss Hp: ' + bossHealth + '/' + bossMaxHp);
+    boss.healthBar.drawHealthBar(bossHealth, bossMaxHp);
     if (bossHealth <= 0) {
       this.scene.start('IntroScene');
     }
