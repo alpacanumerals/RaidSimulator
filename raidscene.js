@@ -490,33 +490,58 @@ const RaidScene = new Phaser.Class({
       party.add(player);
 
 //MMO UI generation
-      P00 = this.add.text(55, 15, cardNames[0], pawnCardStyle);
-      P01 = this.add.text(55, 55, cardNames[1], pawnCardStyle);
-      P02 = this.add.text(55, 95, cardNames[2], pawnCardStyle);
-      P03 = this.add.text(55, 135, cardNames[3], pawnCardStyle);
-      P04 = this.add.text(55, 175, cardNames[4], pawnCardStyle);
-      P05 = this.add.text(55, 215, cardNames[5], pawnCardStyle);
-      P06 = this.add.text(55, 255, cardNames[6], pawnCardStyle);
-      P07 = this.add.text(55, 295, cardNames[7], pawnCardStyle);
-      P08 = this.add.text(55, 335, cardNames[8], pawnCardStyle);
-      P09 = this.add.text(55, 375, cardNames[9], pawnCardStyle);
-      P10 = this.add.text(55, 415, cardNames[10], pawnCardStyle);
-      P11 = this.add.text(55, 455, cardNames[11], pawnCardStyle);
+      P00 = this.add.text(55, 17, cardNames[0], pawnCardStyle);
+      P01 = this.add.text(55, 57, cardNames[1], pawnCardStyle);
+      P02 = this.add.text(55, 97, cardNames[2], pawnCardStyle);
+      P03 = this.add.text(55, 137, cardNames[3], pawnCardStyle);
+      P04 = this.add.text(55, 177, cardNames[4], pawnCardStyle);
+      P05 = this.add.text(55, 217, cardNames[5], pawnCardStyle);
+      P06 = this.add.text(55, 257, cardNames[6], pawnCardStyle);
+      P07 = this.add.text(55, 297, cardNames[7], pawnCardStyle);
+      P08 = this.add.text(55, 337, cardNames[8], pawnCardStyle);
+      P09 = this.add.text(55, 377, cardNames[9], pawnCardStyle);
+      P10 = this.add.text(55, 417, cardNames[10], pawnCardStyle);
+      P11 = this.add.text(55, 457, cardNames[11], pawnCardStyle);
 
-      P12 = this.add.text(325, 15, cardNames[12], pawnCardStyle);
-      P13 = this.add.text(325, 55, cardNames[13], pawnCardStyle);
-      P14 = this.add.text(325, 95, cardNames[14], pawnCardStyle);
-      P15 = this.add.text(325, 135, cardNames[15], pawnCardStyle);
-      P16 = this.add.text(325, 175, cardNames[16], pawnCardStyle);
-      P17 = this.add.text(325, 215, cardNames[17], pawnCardStyle);
-      P18 = this.add.text(325, 255, cardNames[18], pawnCardStyle);
-      P19 = this.add.text(325, 295, cardNames[19], pawnCardStyle);
-      P20 = this.add.text(325, 335, cardNames[20], pawnCardStyle);
-      P21 = this.add.text(325, 375, cardNames[21], pawnCardStyle);
-      P22 = this.add.text(325, 415, cardNames[22], pawnCardStyle);
-      P23 = this.add.text(325, 455, playerName, pawnCardStyle);
+      P12 = this.add.text(325, 17, cardNames[12], pawnCardStyle);
+      P13 = this.add.text(325, 57, cardNames[13], pawnCardStyle);
+      P14 = this.add.text(325, 97, cardNames[14], pawnCardStyle);
+      P15 = this.add.text(325, 137, cardNames[15], pawnCardStyle);
+      P16 = this.add.text(325, 177, cardNames[16], pawnCardStyle);
+      P17 = this.add.text(325, 217, cardNames[17], pawnCardStyle);
+      P18 = this.add.text(325, 257, cardNames[18], pawnCardStyle);
+      P19 = this.add.text(325, 297, cardNames[19], pawnCardStyle);
+      P20 = this.add.text(325, 337, cardNames[20], pawnCardStyle);
+      P21 = this.add.text(325, 377, cardNames[21], pawnCardStyle);
+      P22 = this.add.text(325, 417, cardNames[22], pawnCardStyle);
+      P23 = this.add.text(325, 457, playerName, pawnCardStyle);
 
-      p00i = this.add.image(15, 15, "icon-heals")
+      p00i = this.add.image(32, 30, "icon-tank")
+      p01i = this.add.image(32, 70, "icon-tank")
+      p02i = this.add.image(32, 110, "icon-tank")
+
+      p03i = this.add.image(32, 150, "icon-heals")
+      p04i = this.add.image(32, 190, "icon-heals")
+      p05i = this.add.image(32, 230, "icon-heals")
+      p06i = this.add.image(32, 270, "icon-heals")
+      p07i = this.add.image(32, 310, "icon-heals")
+      p08i = this.add.image(32, 350, "icon-heals")
+
+      p09i = this.add.image(32, 390, "icon-dps")
+      p10i = this.add.image(32, 430, "icon-dps")
+      p11i = this.add.image(32, 470, "icon-dps")
+      p12i = this.add.image(302, 30, "icon-dps")
+      p13i = this.add.image(302, 70, "icon-dps")
+      p14i = this.add.image(302, 110, "icon-dps")
+      p15i = this.add.image(302, 150, "icon-dps")
+      p16i = this.add.image(302, 190, "icon-dps")
+      p17i = this.add.image(302, 230, "icon-dps")
+      p18i = this.add.image(302, 270, "icon-dps")
+      p19i = this.add.image(302, 310, "icon-dps")
+      p20i = this.add.image(302, 350, "icon-dps")
+      p21i = this.add.image(302, 390, "icon-dps")
+      p22i = this.add.image(302, 430, "icon-dps")
+      p23i = this.add.image(302, 470, "icon-dps")
   },
 
   update: function(gameTime) {
