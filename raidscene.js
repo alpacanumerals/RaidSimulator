@@ -195,34 +195,40 @@ const RaidScene = new Phaser.Class({
         j++;
         if (j < roleDistribution[0]) {
           pawn._role = tankRole;
+          pawn.maxHealth = pawnTankMaxHp;
+          pawn.damageRate = pawnTankDamage;
         } else if (j < roleDistribution[0] + roleDistribution[1]) {
           pawn._role = healerRole;
+          pawn.maxHealth = pawnHealMaxHp;
+          pawn.damageRate = pawnHealDamage;
         } else {
           pawn._role = dpsRole;
+          pawn.maxHealth = pawnDpsMaxHp;
+          pawn.damageRate = pawnDpsDamage;
         }
       }
 
-      var i
+      var i;
       for (i=0; i<24; i++) {
         const pawn = this.add.container();
         this.physics.world.enable(pawn);
         composePawn(pawn);
         setPawnRole(pawn);
-        // addPawnEmitter(pawn);
+        pawn.pawnAttackInterval = Phaser.Math.RND.between(250, 400)
+        pawn.pawnMoveInterval = Phaser.Math.RND.between(100, 400)
         pawns.add(pawn);
       }
 
       Phaser.Actions.RandomCircle(pawns.getChildren(), startZone);
       pawns.getChildren().forEach(pawn => {
+        setPawnRole(pawn);
         pawn.targetLocation = new Phaser.Geom.Point(pawn.x, pawn.y);
-        pawn.pawnAttackInterval = Phaser.Math.RND.between(250, 400)
         pawn.nextPawnAttackTime = globalClock + pawn.pawnAttackInterval
-        pawn.pawnMoveInterval = Phaser.Math.RND.between(100, 400)
         pawn.nextPawnMoveTime = globalClock + pawn.pawnMoveInterval;
         pawn.respondingToMechanic = false;
-        pawn.currentHealth = pawnMaxHp;
+        pawn.currentHealth = pawn.maxHealth;
         pawn.keio = false;
-        pawn.knowsMechanic = Math.random() < 0.25 ? true : false;
+        pawn.knowsMechanic = Math.random() < 0.25 ? true : false; // this will need to be initialised some other way
       }, this);
       // pawn creation end
 
