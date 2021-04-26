@@ -315,36 +315,7 @@ const RaidScene = new Phaser.Class({
         const getRandomIndex = (array) => {
             return Math.floor(Math.random() * array.length);
         }
-        // get legs
-        const legKeys = ['pawnbottom1', 'pawnbottom2', 'pawnlegs1'];
-        const legUpAnims = ['bottom1up', 'bottom2up', 'legs1up'];
-        const legLeftAnims = ['bottom1left', 'bottom2left', 'legs1left'];
-        const legDownAnims = ['bottom1down', 'bottom2down', 'legs1down'];
-        const legRightAnims = ['bottom1right', 'bottom2right', 'legs1right'];
-        const legIndex = getRandomIndex(legKeys);
-        const legKey = legKeys[legIndex];
-        var legSprite = this.add.sprite(0, -18, legKey);
-        legSprite._upAnimKey = legUpAnims[legIndex];
-        legSprite._leftAnimKey = legLeftAnims[legIndex];
-        legSprite._downAnimKey = legDownAnims[legIndex];
-        legSprite._rightAnimKey = legRightAnims[legIndex];
-        container.add(legSprite)
-
-        // get torso
-        const torsoKeys = ['pawnbody1', 'pawnbody2'];
-        const torsoUpAnims = ['body1up', 'body2up'];
-        const torsoLeftAnims = ['body1left', 'body2left'];
-        const torsoDownAnims = ['body1down', 'body2down'];
-        const torsoRightAnims = ['body1right', 'body2right'];
-        const torsoIndex = getRandomIndex(torsoKeys);
-        const torsoKey = torsoKeys[torsoIndex];
-        torsoSprite = this.add.sprite(0, -52, torsoKey);
-        torsoSprite._upAnimKey = torsoUpAnims[torsoIndex];
-        torsoSprite._leftAnimKey = torsoLeftAnims[torsoIndex];
-        torsoSprite._downAnimKey = torsoDownAnims[torsoIndex];
-        torsoSprite._rightAnimKey = torsoRightAnims[torsoIndex];
-        container.add(torsoSprite)
-
+        
         // get head
         const headKeys = ['pawnhead1'];
         const headUpAnims = ['head1up'];
@@ -354,7 +325,10 @@ const RaidScene = new Phaser.Class({
         const headIndex = getRandomIndex(headKeys);
         const headKey = headKeys[headIndex];
         var headSprite = this.add.sprite(0, -76, headKey);
+        const skinTints = [0xffddcc, 0xffe5e7, 0xffdbb7, 0xffc4bf, 0x5b473a];
+        const skinIndex = getRandomIndex(skinTints);
         headSprite._upAnimKey = headUpAnims[headIndex];
+        headSprite.setTint(skinTints[skinIndex]);
         headSprite._leftAnimKey = headLeftAnims[headIndex];
         headSprite._downAnimKey = headDownAnims[headIndex];
         headSprite._rightAnimKey = headRightAnims[headIndex];
@@ -374,6 +348,36 @@ const RaidScene = new Phaser.Class({
         hairSprite._downAnimKey = hairDownAnims[hairIndex];
         hairSprite._rightAnimKey = hairRightAnims[hairIndex];
         container.add(hairSprite)
+
+        // get torso
+        const torsoKeys = ['pawnbody1', 'pawnbody2'];
+        const torsoUpAnims = ['body1up', 'body2up'];
+        const torsoLeftAnims = ['body1left', 'body2left'];
+        const torsoDownAnims = ['body1down', 'body2down'];
+        const torsoRightAnims = ['body1right', 'body2right'];
+        const torsoIndex = getRandomIndex(torsoKeys);
+        const torsoKey = torsoKeys[torsoIndex];
+        torsoSprite = this.add.sprite(0, -52, torsoKey);
+        torsoSprite._upAnimKey = torsoUpAnims[torsoIndex];
+        torsoSprite._leftAnimKey = torsoLeftAnims[torsoIndex];
+        torsoSprite._downAnimKey = torsoDownAnims[torsoIndex];
+        torsoSprite._rightAnimKey = torsoRightAnims[torsoIndex];
+        container.add(torsoSprite)
+
+        // get legs
+        const legKeys = ['pawnbottom1', 'pawnbottom2', 'pawnlegs1'];
+        const legUpAnims = ['bottom1up', 'bottom2up', 'legs1up'];
+        const legLeftAnims = ['bottom1left', 'bottom2left', 'legs1left'];
+        const legDownAnims = ['bottom1down', 'bottom2down', 'legs1down'];
+        const legRightAnims = ['bottom1right', 'bottom2right', 'legs1right'];
+        const legIndex = getRandomIndex(legKeys);
+        const legKey = legKeys[legIndex];
+        var legSprite = this.add.sprite(0, -18, legKey);
+        legSprite._upAnimKey = legUpAnims[legIndex];
+        legSprite._leftAnimKey = legLeftAnims[legIndex];
+        legSprite._downAnimKey = legDownAnims[legIndex];
+        legSprite._rightAnimKey = legRightAnims[legIndex];
+        container.add(legSprite)
       }
 
       pawns = this.physics.add.group();
