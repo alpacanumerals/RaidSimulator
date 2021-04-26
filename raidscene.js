@@ -263,6 +263,11 @@ const RaidScene = new Phaser.Class({
       nextMechanicTime = globalClock + bossMechanicInterval;
 
       graphics = this.add.graphics({ lineStyle: { width: 2, color: 0x00ff00 }, fillStyle: { color: 0xff0000 }});
+
+      pawns.getChildren().forEach(pawn => {
+        party.add(pawn);
+      }, this);
+      party.add(player);
   },
 
   update: function(gameTime) {

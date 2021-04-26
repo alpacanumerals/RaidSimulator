@@ -27,7 +27,7 @@
   const pawnHealDamage = 100;
   const pawnHealMaxHp = 1000;
   const pawnHealPower = 300;
-  const pawnRezTimer = 10000;
+  const pawnHealTimer = 5000;
 
   const pi = Math.PI;
 
@@ -36,6 +36,7 @@
   var boss;
 
   var pawns;
+  var party;
 
   var attackParticle;
 
