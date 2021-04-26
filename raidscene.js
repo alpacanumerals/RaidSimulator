@@ -294,7 +294,8 @@ const RaidScene = new Phaser.Class({
       const attacksAIndex = getRandomIndex(attacksA)
       const attacksBIndex = getRandomIndex(attacksB)
       const attacksCIndex = getRandomIndex(attacksC)
-      const bossAttackList = [attacksA[attacksAIndex], attacksB[attacksBIndex], attacksC[attacksCIndex]]
+      bossAttackList = [attacksA[attacksAIndex], attacksB[attacksBIndex], attacksC[attacksCIndex]];
+      mechanicList = [circleAoe, crossAoe, raidWide];
 
       //Composing pawns from here.
       const composePawn = (container) => {
@@ -514,10 +515,7 @@ const RaidScene = new Phaser.Class({
         }, this
       );
       
-      timeText = this.add.text(15, 510, 'Time: ', { fill: '#00ff00' });
-      bossHealthText = this.add.text(15, 530, 'Boss Hp: ', { fill: '#00ff00' });
       mechanicText = this.add.text(15, 550, 'No Mechanic', { fill: '#00ff00' });
-      playerHealthText = this.add.text(15, 570, 'Player Hp: ', { fill: '#00ff00' });
       playerDamageText = this.add.text(15, 590, 'Player Damage: ', { fill: '#00ff00' });
       playerDamageDealt = 0;
 
@@ -619,17 +617,16 @@ const RaidScene = new Phaser.Class({
       createHealthBar(pawnHealthBars[20], 324, 353, 200, 12)
       createHealthBar(pawnHealthBars[21], 324, 393, 200, 12)
       createHealthBar(pawnHealthBars[22], 324, 433, 200, 12)
+
+      mechanicCycleIndex = 0;
   },
 
   update: function(gameTime) {
     globalClock = gameTime;
-    timeText.setText('Time: ' + globalClock);
-    bossHealthText.setText('Boss Hp: ' + bossHealth + '/' + bossMaxHp);
     boss.healthBar.drawHealthBar(bossHealth, bossMaxHp);
     if (bossHealth <= 0) {
       this.scene.start('IntroScene');
     }
-    playerHealthText.setText('Player Hp: ' + player.currentHealth + '/' + player.maxHealth);
     playerDamageText.setText('Player Damage: ' + playerDamageDealt)
 
     // resolve end-of-mechanic when it is time to fire
@@ -653,16 +650,18 @@ const RaidScene = new Phaser.Class({
 
       nextMechanicTime = globalClock + bossMechanicInterval;
       mechanicActive = false;
-      mechanicText.setText('No Mechanic')
+      mechanicText.setText('')
+      mechanicCycleIndex++;
     }
 
     // start a mechanic if it is time to charge one
     if (!mechanicActive && globalClock > nextMechanicTime) {
       mechanicActive = true;
-      currentMechanic = raidWide; // this will later need to be from somewhere
+      mechanicKey = mechanicCycleIndex%3;
+      currentMechanic = mechanicList[mechanicKey]; // this will later need to be from somewhere
       mechanicFireTime = globalClock + currentMechanic.chargeTime;
       nextBossMoveTime = mechanicFireTime + bossMoveInterval;
-      mechanicText.setText('Mechanic Active!')
+      mechanicText.setText(bossAttackList[mechanicKey]);
     }
 
     // a general function used to check if an object has reached its target and stop it if so

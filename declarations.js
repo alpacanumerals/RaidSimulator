@@ -43,9 +43,8 @@
   var playerTarget;
   var bossTarget = new Phaser.Math.Vector2();
 
-  var timeText;
-  var bossHealthText;
   var mechanicText;
+  var playerDamageText;
 
   var nextBossMoveTime;
   var bossHealth;
@@ -54,6 +53,10 @@
   var mechanicFireTime;
   var mechanicActive;
   var currentMechanic;
+  var mechanicCycleIndex;
+
+  var bossAttackList;
+  var mechanicList;
 
   var mechanics;
 
