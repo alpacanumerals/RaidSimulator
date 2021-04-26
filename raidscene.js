@@ -290,6 +290,11 @@ const RaidScene = new Phaser.Class({
       const getRandomIndex = (array) => {
         return Math.floor(Math.random() * array.length);
       }
+      //Picking attack names for  the boss
+      const attacksAIndex = getRandomIndex(attacksA)
+      const attacksBIndex = getRandomIndex(attacksB)
+      const attacksCIndex = getRandomIndex(attacksC)
+      const bossAttackList = [attacksA[attacksAIndex], attacksB[attacksBIndex], attacksC[attacksCIndex]]
 
       //Composing pawns from here.
       const composePawn = (container) => {
