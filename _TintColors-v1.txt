@@ -1,11 +1,6 @@
 //Skin Tones
-[
-0xffddcc
-0xffe5e7
-0xffdbb7
-0xffc4bf
-0x5b473a
-]
+['#ffddcc', '#ffe5e7', '#ffdbb7', '#ffc4bf', '#5b473a']
+
 
 
 //Clothing and Hair Tones 
@@ -13,23 +8,23 @@
 //Future: Color coordination logic?!?
 [
 //Blues
-0x00ffff
-0x99e6ff
-0x2d2d86
-0xd1b3ff
-0x002db3
-//Greens
-0x80ffff
-0x008040
-0x006600
-0xc4ff4d
-0x99ff99
+#00ffff,
+#99e6ff,
+#2d2d86,
+#d1b3ff,
+#002db3,
+//Greens,
+#80ffff,
+#008040,
+#006600,
+#c4ff4d,
+#99ff99,
 //Reds and Purples
-0xffe6ff
-0xe60073
-0xb30000
-0x660000
-0xbf00ff
+#ffe6ff,
+#e60073,
+#b30000,
+#660000,
+#bf00ff,
 //Orange
-0xff6600
+#ff6600,
 ]
