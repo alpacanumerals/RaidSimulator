@@ -493,6 +493,7 @@ const RaidScene = new Phaser.Class({
       addNameTag(player, playerName);
       player.body.reset(raidZoneCentreX, 720);
       playerTarget = this.physics.add.image(raidZoneCentreX, 720, 'playerTarget');
+      playerTarget.setVisible(false);
 
       player.playerAttackInterval = 500;
       player.nextPlayerAttackTime = globalClock + player.playerAttackInterval;
