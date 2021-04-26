@@ -385,7 +385,6 @@ const RaidScene = new Phaser.Class({
         torsoSprite._downAnimKey = torsoDownAnims[torsoIndex];
         torsoSprite._rightAnimKey = torsoRightAnims[torsoIndex];
         
-
         // get legs
         const legKeys = ['pawnbottom1', 'pawnbottom2', 'pawnlegs1'];
         const legUpAnims = ['bottom1up', 'bottom2up', 'legs1up'];
@@ -400,10 +399,11 @@ const RaidScene = new Phaser.Class({
         legSprite._downAnimKey = legDownAnims[legIndex];
         legSprite._rightAnimKey = legRightAnims[legIndex];
 
-        container.add(hairSprite)
+        //Right now this just hard orders them with no variation on how things overlap when they're turned different ways.
         container.add(legSprite)      
         container.add(torsoSprite)
         container.add(headSprite)
+        container.add(hairSprite)
       }
 
       pawns = this.physics.add.group();
