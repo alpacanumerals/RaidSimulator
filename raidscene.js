@@ -498,8 +498,14 @@ const RaidScene = new Phaser.Class({
 
       this.input.on('pointerdown', function (pointer)
         {
-          playerTarget.setPosition(pointer.x, pointer.y);
-          this.physics.moveToObject(player, playerTarget, 240);
+          if (
+            pointer.x < rightPlayBound
+            && pointer.x > leftPlayBound
+            && pointer.y > topPlayBound
+            && pointer.y < bottomPlayBound) {
+              playerTarget.setPosition(pointer.x, pointer.y);
+              this.physics.moveToObject(player, playerTarget, 240);
+            }
         }, this
       );
       
@@ -783,7 +789,7 @@ const RaidScene = new Phaser.Class({
 
     // a function used to generate beams
     const showBeam = (origin, target, colour, speed) => {
-      var beam = this.add.line(0, 0, origin.x, origin.y, target.x, target.y, colour).setOrigin(0,0);
+      var beam = this.add.line(0, 0, origin.x, origin.y-50, target.x, target.y, colour).setOrigin(0,0);
       beam.setLineWidth(2, 2);
       this.tweens.add({
         targets: beam,
