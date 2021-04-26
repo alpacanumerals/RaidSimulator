@@ -35,7 +35,6 @@
   var player;
   var boss;
 
-  var pawns;
   var party;
 
   var attackParticle;
@@ -62,6 +61,7 @@
   var graphics;
 
   //pawn variables
+  var pawns;
   var twentyThreeNames = [
     "Foofs Mcfluffs",
     "Viewing Cutscene",
@@ -87,3 +87,4 @@
     "Vivi Vivi'anna",
     "Jana Oltera"
   ];
+  var playerName = ["Raid' Simulator"];
