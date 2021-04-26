@@ -543,32 +543,32 @@ const RaidScene = new Phaser.Class({
       P22 = this.add.text(325, 417, cardNames[22], pawnCardStyle);
       P23 = this.add.text(325, 457, playerName, pawnCardStyle);
 
-      p00i = this.add.image(32, 30, "icon-tank")
-      p01i = this.add.image(32, 70, "icon-tank")
-      p02i = this.add.image(32, 110, "icon-tank")
+      p00i = this.add.image(32, 30, "icon-tank");
+      p01i = this.add.image(32, 70, "icon-tank");
+      p02i = this.add.image(32, 110, "icon-tank");
 
-      p03i = this.add.image(32, 150, "icon-heals")
-      p04i = this.add.image(32, 190, "icon-heals")
-      p05i = this.add.image(32, 230, "icon-heals")
-      p06i = this.add.image(32, 270, "icon-heals")
-      p07i = this.add.image(32, 310, "icon-heals")
-      p08i = this.add.image(32, 350, "icon-heals")
+      p03i = this.add.image(32, 150, "icon-heals");
+      p04i = this.add.image(32, 190, "icon-heals");
+      p05i = this.add.image(32, 230, "icon-heals");
+      p06i = this.add.image(32, 270, "icon-heals");
+      p07i = this.add.image(32, 310, "icon-heals");
+      p08i = this.add.image(32, 350, "icon-heals");
 
-      p09i = this.add.image(32, 390, "icon-dps")
-      p10i = this.add.image(32, 430, "icon-dps")
-      p11i = this.add.image(32, 470, "icon-dps")
-      p12i = this.add.image(302, 30, "icon-dps")
-      p13i = this.add.image(302, 70, "icon-dps")
-      p14i = this.add.image(302, 110, "icon-dps")
-      p15i = this.add.image(302, 150, "icon-dps")
-      p16i = this.add.image(302, 190, "icon-dps")
-      p17i = this.add.image(302, 230, "icon-dps")
-      p18i = this.add.image(302, 270, "icon-dps")
-      p19i = this.add.image(302, 310, "icon-dps")
-      p20i = this.add.image(302, 350, "icon-dps")
-      p21i = this.add.image(302, 390, "icon-dps")
-      p22i = this.add.image(302, 430, "icon-dps")
-      p23i = this.add.image(302, 470, "icon-dps")
+      p09i = this.add.image(32, 390, "icon-dps");
+      p10i = this.add.image(32, 430, "icon-dps");
+      p11i = this.add.image(32, 470, "icon-dps");
+      p12i = this.add.image(302, 30, "icon-dps");
+      p13i = this.add.image(302, 70, "icon-dps");
+      p14i = this.add.image(302, 110, "icon-dps");
+      p15i = this.add.image(302, 150, "icon-dps");
+      p16i = this.add.image(302, 190, "icon-dps");
+      p17i = this.add.image(302, 230, "icon-dps");
+      p18i = this.add.image(302, 270, "icon-dps");
+      p19i = this.add.image(302, 310, "icon-dps");
+      p20i = this.add.image(302, 350, "icon-dps");
+      p21i = this.add.image(302, 390, "icon-dps");
+      p22i = this.add.image(302, 430, "icon-dps");
+      p23i = this.add.image(302, 470, "icon-dps");
   },
 
   update: function(gameTime) {
