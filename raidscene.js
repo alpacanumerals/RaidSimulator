@@ -196,7 +196,7 @@ const RaidScene = new Phaser.Class({
       pawns = this.physics.add.group();
 
       var i
-      for (i=0; i<8; i++) {
+      for (i=0; i<24; i++) {
         const pawn = this.add.container();
         this.physics.world.enable(pawn);
         composePawn(pawn);
