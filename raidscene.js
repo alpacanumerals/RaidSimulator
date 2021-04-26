@@ -38,41 +38,11 @@ const RaidScene = new Phaser.Class({
       // currently not used, was hoping to turn into player attacks later
       particles = this.add.particles('spark');
 
-      //MALCODE STARTS
-      //Testing Layout
       const pawnCardStyle = {fontFamily: "Trebuchet MS", fontSize: "16px", fill: '#66ffff' }
       const nameTagStyle = {fontFamily: "Trebuchet MS", fontSize: "12px", fill: '#66ffff' }
 
-      P01 = this.add.text(55, -85, "Player", pawnCardStyle);
-      P02 = this.add.text(55, -45, "Player", pawnCardStyle);
-      P03 = this.add.text(55, -5, "Player", pawnCardStyle);
-      P04 = this.add.text(55, 35, "Player", pawnCardStyle);
-      P05 = this.add.text(55, 75, "Player", pawnCardStyle);
-      P06 = this.add.text(55, 115, "Player", pawnCardStyle);
-      P07 = this.add.text(55, 155, "Player", pawnCardStyle);
-      P08 = this.add.text(55, 195, "Player", pawnCardStyle);
-      P09 = this.add.text(55, 235, "Player", pawnCardStyle);
-      P10 = this.add.text(55, 275, "Player", pawnCardStyle);
-      P11 = this.add.text(55, 315, "Player", pawnCardStyle);
-      P12 = this.add.text(55, 355, "Player", pawnCardStyle);
-
-      P13 = this.add.text(325, -85, "Player", pawnCardStyle);
-      P14 = this.add.text(325, -45, "Player", pawnCardStyle);
-      P15 = this.add.text(325, -5, "Player", pawnCardStyle);
-      P16 = this.add.text(325, 35, "Player", pawnCardStyle);
-      P17 = this.add.text(325, 75, "Player", pawnCardStyle);
-      P18 = this.add.text(325, 115, "Player", pawnCardStyle);
-      P19 = this.add.text(325, 155, "Player", pawnCardStyle);
-      P20 = this.add.text(325, 195, "Player", pawnCardStyle);
-      P21 = this.add.text(325, 235, "Player", pawnCardStyle);
-      P22 = this.add.text(325, 275, "Player", pawnCardStyle);
-      P23 = this.add.text(325, 315, "Player", pawnCardStyle);
-      P24 = this.add.text(325, 355, "Player", pawnCardStyle);
       //Let's also throw the arena on.
       room = this.add.image(1245, 540, "bossroom")
-
-      //MALCODE ENDS
-
 
       // Pawn animations
       // Defining how to define the anims
@@ -512,6 +482,33 @@ const RaidScene = new Phaser.Class({
         party.add(pawn);
       }, this);
       party.add(player);
+
+
+      P01 = this.add.text(55, -85, "Player", pawnCardStyle);
+      P02 = this.add.text(55, -45, "Player", pawnCardStyle);
+      P03 = this.add.text(55, -5, "Player", pawnCardStyle);
+      P04 = this.add.text(55, 35, "Player", pawnCardStyle);
+      P05 = this.add.text(55, 75, "Player", pawnCardStyle);
+      P06 = this.add.text(55, 115, "Player", pawnCardStyle);
+      P07 = this.add.text(55, 155, "Player", pawnCardStyle);
+      P08 = this.add.text(55, 195, "Player", pawnCardStyle);
+      P09 = this.add.text(55, 235, "Player", pawnCardStyle);
+      P10 = this.add.text(55, 275, "Player", pawnCardStyle);
+      P11 = this.add.text(55, 315, "Player", pawnCardStyle);
+      P12 = this.add.text(55, 355, "Player", pawnCardStyle);
+
+      P13 = this.add.text(325, -85, "Player", pawnCardStyle);
+      P14 = this.add.text(325, -45, "Player", pawnCardStyle);
+      P15 = this.add.text(325, -5, "Player", pawnCardStyle);
+      P16 = this.add.text(325, 35, "Player", pawnCardStyle);
+      P17 = this.add.text(325, 75, "Player", pawnCardStyle);
+      P18 = this.add.text(325, 115, "Player", pawnCardStyle);
+      P19 = this.add.text(325, 155, "Player", pawnCardStyle);
+      P20 = this.add.text(325, 195, "Player", pawnCardStyle);
+      P21 = this.add.text(325, 235, "Player", pawnCardStyle);
+      P22 = this.add.text(325, 275, "Player", pawnCardStyle);
+      P23 = this.add.text(325, 315, "Player", pawnCardStyle);
+      P24 = this.add.text(325, 355, "Player", pawnCardStyle);
   },
 
   update: function(gameTime) {
