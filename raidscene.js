@@ -332,35 +332,47 @@ const RaidScene = new Phaser.Class({
 
         // get torso
         const torsoKeys = ['pawnbody1', 'pawnbody2'];
+        const torsoUpAnims = ['body1up', 'body2up'];
+        const torsoLeftAnims = ['body1left', 'body2left'];
         const torsoDownAnims = ['body1down', 'body2down'];
+        const torsoRightAnims = ['body1right', 'body2right'];
         const torsoIndex = getRandomIndex(torsoKeys);
         const torsoKey = torsoKeys[torsoIndex];
         torsoSprite = this.add.sprite(0, -52, torsoKey);
-        torsoSprite._upAnimKey = torsoDownAnims[torsoIndex];
-        torsoSprite._leftAnimKey = torsoDownAnims[torsoIndex];
+        torsoSprite._upAnimKey = torsoUpAnims[torsoIndex];
+        torsoSprite._leftAnimKey = torsoLeftAnims[torsoIndex];
         torsoSprite._downAnimKey = torsoDownAnims[torsoIndex];
-        torsoSprite._rightAnimKey = torsoDownAnims[torsoIndex];
+        torsoSprite._rightAnimKey = torsoRightAnims[torsoIndex];
         container.add(torsoSprite)
 
         // get head
-        const headKey = 'pawnhead1';
-        headSprite = this.add.sprite(0, -76, headKey);
-        headSprite._upAnimKey = 'head1down';
-        headSprite._leftAnimKey = 'head1down';
-        headSprite._downAnimKey = 'head1down';
-        headSprite._rightAnimKey = 'head1down';
+        const headKeys = ['pawnhead1'];
+        const headUpAnims = ['head1up'];
+        const headLeftAnims = ['head1left'];
+        const headDownAnims = ['head1down'];
+        const headRightAnims = ['head1right'];
+        const headIndex = getRandomIndex(headKeys);
+        const headKey = headKeys[headIndex];
+        var headSprite = this.add.sprite(0, -76, headKey);
+        headSprite._upAnimKey = headUpAnims[headIndex];
+        headSprite._leftAnimKey = headLeftAnims[headIndex];
+        headSprite._downAnimKey = headDownAnims[headIndex];
+        headSprite._rightAnimKey = headRightAnims[headIndex];
         container.add(headSprite)
 
         // get hair
         const hairKeys = ['pawnhair1', 'pawnhair2', 'pawnhair3'];
+        const hairUpAnims = ['hair1up', 'hair2up', 'hair3up'];
+        const hairLeftAnims = ['hair1left', 'hair2left', 'hair3left'];
         const hairDownAnims = ['hair1down', 'hair2down', 'hair3down'];
+        const hairRightAnims = ['hair1right', 'hair2right', 'hair3right'];
         const hairIndex = getRandomIndex(hairKeys);
         const hairKey = hairKeys[hairIndex];
         var hairSprite = this.add.sprite(0, -72, hairKey);
-        hairSprite._upAnimKey = hairDownAnims[hairIndex];
-        hairSprite._leftAnimKey = hairDownAnims[hairIndex];
+        hairSprite._upAnimKey = hairUpAnims[hairIndex];
+        hairSprite._leftAnimKey = hairLeftAnims[hairIndex];
         hairSprite._downAnimKey = hairDownAnims[hairIndex];
-        hairSprite._rightAnimKey = hairDownAnims[hairIndex];
+        hairSprite._rightAnimKey = hairRightAnims[hairIndex];
         container.add(hairSprite)
       }
 
