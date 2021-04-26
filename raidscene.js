@@ -396,7 +396,7 @@ const RaidScene = new Phaser.Class({
         //get a name (temporary garbage code)
         const nameIndex = getRandomIndex(twentyThreeNames);
         const pawnName = !!nameOverride ? nameOverride : twentyThreeNames[nameIndex];
-        var nameTag = this.add.text(-25, -110, pawnName, nameTagStyle);
+        var nameTag = this.add.text(-40, -110, pawnName, nameTagStyle);
         cardNames.push(pawnName);
         container.add(nameTag);
       }
