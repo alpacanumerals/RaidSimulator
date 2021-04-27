@@ -745,9 +745,9 @@ const RaidScene = new Phaser.Class({
       var peerCount = 0;
       var emergencyBreak = 0;
       const surveyPeers = (maxRadius) => {
-        pawns.getChildren().forEach(other => {
+        party.getChildren().forEach(other => {
         const dist = Phaser.Math.Distance.Between(pawn.x, pawn.y, other.x, other.y);
-        if (dist < flockMaximum && dist > flockMinimum) {
+        if (dist < maxRadius && dist > flockMinimum && !other.keio) {
           peerCount++;
           targetX += other.x;
           targetY += other.y;
