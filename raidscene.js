@@ -620,18 +620,65 @@ const RaidScene = new Phaser.Class({
       createHealthBar(pawnHealthBars[22], 324, 433, 200, 12)
 
       mechanicCycleIndex = 0;
+      emitter = null;
+
+      raidEndTime = null;
+      raidResetTime = null;
   },
 
   update: function(gameTime) {
     globalClock = gameTime;
     boss.healthBar.drawHealthBar(bossHealth, bossMaxHp);
     if (bossHealth <= 0) {
+      bossHealth = 0;
+      if (!raidEndTime) {
+        raidEndTime = globalClock + 5000;
+      }
+      
+      if (emitter == null) {
+        // apolgies if anyone is looking at this unbelievable hasty hack
+        emitter = 1;
+        this.tweens.add({
+          targets: boss,
+          alpha: 0,
+          yoyo: false,
+          repeat: 0,
+          ease: 'Sine.easeInOut'
+        })
+        this.sound.play("se-aoe");
+        boss.setTint(0xff0000);
+        // var emitter = particles.createEmitter({
+        //   x: boss.x,
+        //   y: boss.y,
+        //   speed: 50,
+        //   quantity: 1,
+        //   scale: { start: 0.1, end: 0.2 },
+        // });
+        // emitter.setSpeed(50);
+        // emitter.setBlendMode(Phaser.BlendModes.ADD);
+      }
+    }
+
+    const pawnsAlive = party.getChildren().filter(member => member.currentHealth > 0);
+
+    if (pawnsAlive.length == 0) {
+      if (!raidResetTime) {
+        raidResetTime = globalClock + 5000;
+      }
+    }
+
+    if (!!raidEndTime && raidEndTime < globalClock) {
       this.scene.start('IntroScene');
     }
+
+    if (!!raidResetTime && raidResetTime < globalClock) {
+      this.scene.start('RaidScene');
+    }
+
     playerDamageText.setText('Player Damage: ' + playerDamageDealt)
 
     // resolve end-of-mechanic when it is time to fire
-    if (mechanicActive && globalClock > mechanicFireTime) {
+    if (mechanicActive && globalClock > mechanicFireTime && bossHealth > 0) {
       currentMechanic.damageAnimation(this, boss);
       this.sound.play("se-aoe");
       // check for damage
@@ -656,7 +703,7 @@ const RaidScene = new Phaser.Class({
     }
 
     // start a mechanic if it is time to charge one
-    if (!mechanicActive && globalClock > nextMechanicTime) {
+    if (!mechanicActive && globalClock > nextMechanicTime && bossHealth > 0) {
       mechanicActive = true;
       mechanicKey = mechanicCycleIndex%3;
       currentMechanic = mechanicList[mechanicKey]; // this will later need to be from somewhere
@@ -675,7 +722,7 @@ const RaidScene = new Phaser.Class({
     }
 
     // move the boss if it is time
-    if (gameTime > nextBossMoveTime) {
+    if (gameTime > nextBossMoveTime && bossHealth > 0) {
       nextBossMoveTime = globalClock + bossMoveInterval;
       bossTarget.x = Phaser.Math.RND.between(790, 1700);
       bossTarget.y = Phaser.Math.RND.between(160, 860);
@@ -811,7 +858,7 @@ const RaidScene = new Phaser.Class({
     // pawns call this to handle their attack
     const pawnAttack = (pawn) => {
       if (!pawn.keio) {
-        if (gameTime > pawn.nextPawnAttackTime) {
+        if (gameTime > pawn.nextPawnAttackTime && bossHealth > 0) {
           if (bossDamageCircle.contains(pawn.x, pawn.y)) {
             showBeam(pawn, boss, 0xff0000, 4);
             pawn.nextPawnAttackTime = gameTime + pawn.pawnAttackInterval
@@ -876,7 +923,7 @@ const RaidScene = new Phaser.Class({
     }, this);
 
     const playerAttack = (player) => {
-      if (!player.keio && gameTime > player.nextPlayerAttackTime) {
+      if (!player.keio && gameTime > player.nextPlayerAttackTime && bossHealth > 0) {
         if (bossDamageCircle.contains(player.x, player.y)) {
           showBeam(player, boss, 0xff0000);
           player.nextPlayerAttackTime = gameTime + player.playerAttackInterval

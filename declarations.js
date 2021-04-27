@@ -13,7 +13,7 @@
   const damageRange = 150;
   const bossMoveInterval = 5000;
   const bossMechanicInterval = 10000;
-  const bossMaxHp = 1000000;
+  const bossMaxHp = 10000;
 
   const tankRole = 'tank';
   const dpsRole = 'DPS';
@@ -38,6 +38,8 @@
 
   var party;
 
+  var particles;
+
   var attackParticle;
 
   var playerTarget;
@@ -57,6 +59,11 @@
 
   var bossAttackList;
   var mechanicList;
+
+  var raidEndTime;
+  var raidResetTime;
+
+  var emitter;
 
   var mechanics;
 
