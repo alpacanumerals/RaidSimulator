@@ -47,7 +47,7 @@ const circleAoe = {
   },
 };
 
-const crossWidth = 300;
+const crossWidth = 500;
 
 const crossAoe = {
   name: 'not sure we actually need this',
