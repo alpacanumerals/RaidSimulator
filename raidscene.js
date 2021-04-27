@@ -44,6 +44,7 @@ const RaidScene = new Phaser.Class({
       particles = this.add.particles('spark');
 
       const pawnCardStyle = {fontFamily: "Trebuchet MS", fontSize: "16px", fill: '#66ffff' }
+      const spellCardStyle = {fontFamily: "Trebuchet MS", fontSize: "20px", fill: '#66ffff' }
       const nameTagStyle = {fontFamily: "Trebuchet MS", fontSize: "12px", fill: '#66ffff' }
 
       //Let's also throw the arena on.
@@ -516,7 +517,7 @@ const RaidScene = new Phaser.Class({
         }, this
       );
       
-      mechanicText = this.add.text(723, 50, '', pawnCardStyle);
+      mechanicText = this.add.text(723, 50, '', spellCardStyle);
       playerDamageText = this.add.text(15, 590, 'Player Damage: ', { fill: '#00ff00' });
       playerDamageDealt = 0;
 
