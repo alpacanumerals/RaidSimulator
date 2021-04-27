@@ -13,7 +13,7 @@
   const damageRange = 150;
   const bossMoveInterval = 5000;
   const bossMechanicInterval = 10000;
-  const bossMaxHp = 10000;
+  const bossMaxHp = 1000000;
 
   const tankRole = 'tank';
   const dpsRole = 'DPS';
